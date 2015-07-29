@@ -183,4 +183,16 @@
         android:fontFamily="sans-serif-light"
         android:onClick="backButtonClick"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Cogno&apos;s Quiz"
+        android:id="@+id/textView"
+        android:layout_alignParentTop="true"
+        android:textSize="35dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignRight="@+id/LoginCharacterImageView"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="-50dp" />
+
 </RelativeLayout>

@@ -1,0 +1,154 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/spacebkg"
+    tools:context="com.example.mitch.cognoquizapp.GameResultsActivity"
+    android:nestedScrollingEnabled="true">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Results"
+        android:id="@+id/results"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-light"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/numbercorrect"
+        android:textColor="#FFFFFF"
+        android:textSize="65dp"
+        android:layout_below="@+id/results"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/xpgained"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:layout_below="@+id/numbercorrect"
+        android:layout_centerHorizontal="true" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/progressbar"
+        android:progressDrawable="@drawable/progress_bar_style"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:id="@+id/userAvatar"
+        android:src="@drawable/volo"
+        android:background="@drawable/user_image_background"
+        android:layout_above="@+id/progressbar"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="mmontaldo"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/username"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:layout_toEndOf="@+id/userAvatar"
+        android:layout_alignTop="@+id/userAvatar"
+        android:textStyle="bold"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Professor"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/userlevel"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:layout_toEndOf="@+id/userAvatar"
+        android:layout_below="@+id/username"
+        android:textStyle="bold"
+        android:layout_marginTop="0dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="60/100 xp"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/userxp"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_alignBottom="@+id/userAvatar"
+        android:layout_toEndOf="@+id/userAvatar"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="40 xp to scientist"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/userxpleft"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_above="@+id/progressbar"
+        android:layout_alignRight="@+id/progressbar" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Game"
+        android:id="@+id/restartgame"
+        android:layout_alignParentEnd="true"
+        android:textSize="20dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/buttonshapenext"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:onClick="restartGameClick"
+        android:layout_alignBottom="@+id/xpgained"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Menu"
+        android:id="@+id/mainmenu"
+        android:layout_alignParentEnd="true"
+        android:textSize="20dp"
+        android:layout_below="@+id/restartgame"
+        android:background="@drawable/buttonshapenext"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:onClick="mainMenuClick"
+        android:layout_marginTop="15dp" />
+
+</RelativeLayout>

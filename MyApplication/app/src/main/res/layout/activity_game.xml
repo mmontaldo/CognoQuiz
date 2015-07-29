@@ -7,9 +7,20 @@
     android:background="@drawable/spacebkg"
     tools:context="com.example.mitch.cognoquizapp.GameActivity">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Question #"
+        android:id="@+id/questionNum"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF"
+        android:layout_alignParentTop="true"
+        android:textSize="16dp" />
+
     <Button
         android:id="@+id/questionbox"
-        android:text="If you and an elephant were floating in space and you pushed on the elephant, which of you would move away from the starting point faster?"
+        android:text="                                                                                                                  "
         android:textColor="#FFFFFF"
         android:textSize="15sp"
         android:fontFamily="sans-serif-light"
@@ -18,52 +29,59 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/buttonshape"
-        android:layout_alignParentTop="true"
+        android:layout_alignParentTop="false"
         android:textStyle="bold"
-        android:clickable="false" />
+        android:clickable="false"
+        android:layout_below="@+id/questionNum"/>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="500dp"
-        android:layout_height="wrap_content"
+        android:layout_height="fill_parent"
         android:layout_alignParentTop="true"
         android:paddingTop="70dp"
         android:layout_centerHorizontal="true"
         >
 
         <LinearLayout
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="60dp"
             >
 
             <Button
-                android:id="@+id/answerA"
-                android:text="You"
+                android:id="@+id/optionA"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
                 android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:background="@drawable/buttonshape"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:onClick="optionAClick"
+                android:singleLine="false"
+                android:baselineAligned="false" />
 
             <Button
-                android:id="@+id/answerB"
-                android:text="The Elephant"
+                android:id="@+id/optionB"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
                 android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/buttonshape"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:onClick="optionBClick"
+                android:baselineAligned="false"/>
 
 
         </LinearLayout>
@@ -71,36 +89,40 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_height="70dp"
+            android:layout_marginTop="20dp"
             >
 
             <Button
-                android:id="@+id/answerC"
-                android:text="Both would move the same speed"
+                android:id="@+id/optionC"
+                android:text=""
                 android:textColor="#FFFFFF"
-                android:textSize="13sp"
+                android:textSize="15dp"
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
                 android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:background="@drawable/buttonshape"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:onClick="optionCClick"
+                android:baselineAligned="false"/>
 
             <Button
-                android:id="@+id/answerD"
-                android:text="The Duck"
+                android:id="@+id/optionD"
+                android:text=""
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
                 android:layout_width="240dp"
-                android:layout_height="wrap_content"
+                android:layout_height="fill_parent"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/buttonshape"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:onClick="optionDClick"
+                android:baselineAligned="false"/>
 
 
         </LinearLayout>

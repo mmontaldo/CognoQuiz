@@ -1,10 +1,12 @@
 package com.example.mitch.cognoquizapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class WelcomeScreenActivity extends Activity {
@@ -15,6 +17,9 @@ public class WelcomeScreenActivity extends Activity {
         setContentView(R.layout.activity_welcome_screen);
     }
 
+    public void newGameClick(View view){
+        startActivity(new Intent(this, GameActivity.class));
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

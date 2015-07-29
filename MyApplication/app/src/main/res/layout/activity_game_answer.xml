@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/spacebkg"
+    tools:context="com.example.mitch.cognoquizapp.GameAnswerActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Correct!"
+        android:id="@+id/correctness"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textSize="50dp"
+        android:layout_marginTop="20dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="The answer is you"
+        android:id="@+id/answer"
+        android:textColor="#FFFFFF"
+        android:layout_below="@+id/correctness"
+        android:layout_marginTop="35dp"
+        android:textSize="25dp"
+        android:textAlignment="center"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See Explanation"
+        android:id="@+id/explanation"
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/answer"
+        android:textSize="20dp"
+        android:onClick="explanationClick"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Brought to you by the Book of Y"
+        android:id="@+id/bookofy"
+        android:layout_below="@+id/explanation"
+        android:layout_centerHorizontal="true"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="3dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Next\nQuestion"
+        android:id="@+id/nextquestion"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentLeft="false"
+        android:layout_alignParentTop="false"
+        android:textSize="20dp"
+        android:layout_centerVertical="true"
+        android:background="@drawable/buttonshapenext"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:onClick="nextQuestionClick"/>
+</RelativeLayout>

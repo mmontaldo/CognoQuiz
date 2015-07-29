@@ -11,5 +11,9 @@
     <color name="black">#000000</color>
 
     <string name="title_activity_game">GameActivity</string>
+    <string name="title_activity_game_answer">GameAnswerActivity</string>
+    <string name="title_activity_game_feedback">GameFeedbackActivity</string>
+
+    <string name="Results"><u>Results</u></string>
 
 </resources>
