@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:orientation="horizontal"
+    android:layout_height="wrap_content"
+    android:padding="6dip"
+    android:weightSum="10">
+
+    <ImageButton
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:id="@+id/medal"
+        android:src="@drawable/gold_medal"
+        android:layout_marginTop="6dp"
+        android:layout_weight="5"
+        android:background="@android:color/transparent"/>
+
+    <TextView
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+        android:singleLine="true"
+        android:textStyle="bold"
+        android:text="7/29/2015"
+        android:textSize="25dp"
+        android:layout_marginTop="11dp"
+        android:layout_weight="4"/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="9"
+        android:id="@+id/highscore"
+        android:textSize="25dp"
+        android:layout_marginTop="11dp"
+        android:layout_weight="2"/>
+
+
+</LinearLayout>

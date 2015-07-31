@@ -13,7 +13,7 @@
     <string name="title_activity_game">GameActivity</string>
     <string name="title_activity_game_answer">GameAnswerActivity</string>
     <string name="title_activity_game_feedback">GameFeedbackActivity</string>
-
     <string name="Results"><u>Results</u></string>
+    <string name="title_activity_high_scores">HighScoresActivity</string>
 
 </resources>

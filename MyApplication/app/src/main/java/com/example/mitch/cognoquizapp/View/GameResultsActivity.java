@@ -1,30 +1,23 @@
-package com.example.mitch.cognoquizapp;
+package com.example.mitch.cognoquizapp.View;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Paint;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.mitch.cognoquizapp.R;
 import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import org.w3c.dom.Text;
-
-import java.util.ArrayList;
 import java.util.List;
 
 

@@ -1,4 +1,4 @@
-package com.example.mitch.cognoquizapp;
+package com.example.mitch.cognoquizapp.View;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -12,12 +12,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
 
-import java.text.ParseException;
-import java.util.List;
-
+import com.example.mitch.cognoquizapp.R;
 import com.parse.LogInCallback;
-import com.parse.Parse;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 
@@ -62,12 +58,12 @@ public class LoginScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_screen);
 
-        /*
+
         ParseUser currentUser = ParseUser.getCurrentUser();
 
         if (currentUser != null) {
             startActivity(new Intent(LoginScreenActivity.this,WelcomeScreenActivity.class ));
-        } else {*/
+        } else {
             // show the signup or login screen
 
             animTranslateLogin = AnimationUtils.loadAnimation(this,
@@ -195,7 +191,7 @@ public class LoginScreenActivity extends Activity {
 
                 }
             });
-        //}
+        }
     }
 
     //Signup Button click listener

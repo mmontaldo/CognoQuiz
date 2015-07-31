@@ -1,4 +1,4 @@
-package com.example.mitch.cognoquizapp;
+package com.example.mitch.cognoquizapp.Controller;
 
 /**
  * Created by Mitch on 7/22/2015.

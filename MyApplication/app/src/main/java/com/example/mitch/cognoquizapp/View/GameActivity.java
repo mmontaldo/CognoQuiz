@@ -1,8 +1,7 @@
-package com.example.mitch.cognoquizapp;
+package com.example.mitch.cognoquizapp.View;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,12 +9,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.mitch.cognoquizapp.Model.Question;
+import com.example.mitch.cognoquizapp.R;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-import com.parse.ParseUser;
 
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -99,20 +98,20 @@ public class GameActivity extends Activity {
 
     public void setQuestion(Question q) {
 
-        questionBox.setText(q.question);
+        questionBox.setText(q.getQuestion());
 
-        if (q.isTF) {
+        if (q.getTF()) {
             optionABox.setText("True");
             optionBBox.setText("False");
             optionCBox.setVisibility(View.INVISIBLE);
             optionDBox.setVisibility(View.INVISIBLE);
         } else {
-            optionABox.setText(q.optionA);
-            optionBBox.setText(q.optionB);
+            optionABox.setText(q.getOptionA());
+            optionBBox.setText(q.getOptionB());
             optionCBox.setVisibility(View.VISIBLE);
             optionDBox.setVisibility(View.VISIBLE);
-            optionCBox.setText(q.optionC);
-            optionDBox.setText(q.optionD);
+            optionCBox.setText(q.getOptionC());
+            optionDBox.setText(q.getOptionD());
         }
     }
 
@@ -126,8 +125,8 @@ public class GameActivity extends Activity {
             intent.putExtra("isFinished", false);
         }
 
-        if (q.isTF){
-            if (q.answer.equals("True")){
+        if (q.getTF()){
+            if (q.getAnswer().equals("True")){
                 String message = "correct";
                 numbercorrect++;
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
@@ -142,7 +141,7 @@ public class GameActivity extends Activity {
                 startActivity(intent);
             }
         } else {
-            if (q.answer.equals(q.optionA)){
+            if (q.getAnswer().equals(q.getOptionA())){
                 String message = "correct";
                 numbercorrect++;
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
@@ -170,8 +169,8 @@ public class GameActivity extends Activity {
             intent.putExtra("isFinished", false);
         }
 
-        if (q.isTF){
-            if (q.answer.equals("False")){
+        if (q.getTF()){
+            if (q.getAnswer().equals("False")){
                 String message = "correct";
                 numbercorrect++;
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
@@ -186,7 +185,7 @@ public class GameActivity extends Activity {
                 startActivity(intent);
             }
         } else {
-            if (q.answer.equals(q.optionB)){
+            if (q.getAnswer().equals(q.getOptionB())){
                 String message = "correct";
                 numbercorrect++;
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
@@ -214,7 +213,7 @@ public class GameActivity extends Activity {
             intent.putExtra("isFinished", false);
         }
 
-        if (q.answer.equals(q.optionC)){
+        if (q.getAnswer().equals(q.getOptionC())){
             String message = "correct";
             numbercorrect++;
             intent.putExtra(CORRECTNESS_MESSAGE, message);
@@ -241,7 +240,7 @@ public class GameActivity extends Activity {
             intent.putExtra("isFinished", false);
         }
 
-        if (q.answer.equals(q.optionD)){
+        if (q.getAnswer().equals(q.getOptionD())){
             String message = "correct";
             numbercorrect++;
             intent.putExtra(CORRECTNESS_MESSAGE, message);
