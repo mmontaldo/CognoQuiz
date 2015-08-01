@@ -107,13 +107,17 @@ public class HighScoresCustomAdapter extends BaseAdapter{
             holder.date.setText(tempValues.getDate());
             holder.score.setText(Integer.toString(tempValues.getScore()));
 
+
             if (tempValues.getRank() == 1){
+                holder.medal.setVisibility(View.VISIBLE);
                 holder.medal.setImageResource(R.drawable.gold_medal);
             } else if (tempValues.getRank() == 2){
+                holder.medal.setVisibility(View.VISIBLE);
                 holder.medal.setImageResource(R.drawable.silver_medal);
             } else if (tempValues.getRank() == 3){
+                holder.medal.setVisibility(View.VISIBLE);
                 holder.medal.setImageResource(R.drawable.bronze_medal);
-            } else {
+            }else {
                 holder.medal.setVisibility(View.INVISIBLE);
             }
 
