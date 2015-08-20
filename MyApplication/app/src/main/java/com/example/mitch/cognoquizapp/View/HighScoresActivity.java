@@ -55,6 +55,8 @@ public class HighScoresActivity extends Activity {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("HighScore");
         query.whereEqualTo("user", currentUser);
+        query.orderByDescending("score");
+        query.addDescendingOrder("date");
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> highScoreList, ParseException e) {
                 if (e == null) {
@@ -62,7 +64,7 @@ public class HighScoresActivity extends Activity {
                     for(ParseObject po: highScoreList) {
 
                         String name = po.getString("name");
-                        String date = po.getString("date");
+                        Date date = po.getDate("date");
                         int score = po.getInt("score");
 
                         HighScore h = new HighScore(date, name, score);
@@ -70,7 +72,6 @@ public class HighScoresActivity extends Activity {
 
                     }
 
-                    Collections.sort(CustomListViewValuesArr, new CustomComparator());
                     CustomListViewValuesArr.get(0).setRank(1);
                     CustomListViewValuesArr.get(1).setRank(2);
                     CustomListViewValuesArr.get(2).setRank(3);
@@ -114,16 +115,4 @@ public class HighScoresActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class CustomComparator implements Comparator<HighScore> {
-        @Override
-        public int compare(HighScore h1, HighScore h2) {
-            if (h1.getScore() > h2.getScore()){
-                return -1;
-            } else if (h1.getScore() == h2.getScore()){
-                return 0;
-            } else {
-                return 1;
-            }
-        }
-    }
 }

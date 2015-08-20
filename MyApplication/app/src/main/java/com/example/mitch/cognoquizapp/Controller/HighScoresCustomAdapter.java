@@ -15,7 +15,11 @@ import android.widget.TextView;
 import com.example.mitch.cognoquizapp.Model.HighScore;
 import com.example.mitch.cognoquizapp.R;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Mitch on 7/29/2015.
@@ -104,7 +108,10 @@ public class HighScoresCustomAdapter extends BaseAdapter{
 
             //set model values in holder elements
 
-            holder.date.setText(tempValues.getDate());
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            String dateString = df.format(tempValues.getDate());
+
+            holder.date.setText(dateString);
             holder.score.setText(Integer.toString(tempValues.getScore()));
 
 

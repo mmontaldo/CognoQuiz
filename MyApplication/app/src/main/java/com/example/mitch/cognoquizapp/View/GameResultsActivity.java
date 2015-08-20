@@ -1,23 +1,36 @@
 package com.example.mitch.cognoquizapp.View;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.mitch.cognoquizapp.Controller.HighScoresCustomAdapter;
+import com.example.mitch.cognoquizapp.Model.HighScore;
 import com.example.mitch.cognoquizapp.R;
 import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 
@@ -30,15 +43,21 @@ public class GameResultsActivity extends Activity {
     TextView userXpTxtView;
     TextView userXpLeftTxtView;
     TextView resultsTxtView;
+    TextView highScoreTxtView;
     ProgressBar xpProgressBar;
     Animation animAlphaQuestionsCorrect = null;
     Animation animAlphaXpGained = null;
     int numberCorrect;
     String userName;
-    String userLevel;
+    int gainedXP;
     int currentXP;
+    int newXP;
     int levelNumber;
-    String[] levels = {"student","intern","professor","scientist","master"};
+    int questionSet;
+    ParseUser currentUser;
+    boolean isHighScore = false;
+    public ArrayList<HighScore> HighScoresRetrievedList = new ArrayList<HighScore>();
+    String[] levels = {"Student","Intern","Professor","Scientist","Master"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,26 +66,170 @@ public class GameResultsActivity extends Activity {
         numberCorrect = intent.getIntExtra("numberCorrect", 0);
 
         //Query to get user information
-        ParseUser currentUser = ParseUser.getCurrentUser();
+        currentUser = ParseUser.getCurrentUser();
 
         ParseQuery query = ParseUser.getQuery();
         query.whereEqualTo("objectId", currentUser.getObjectId());
-        query.findInBackground(new FindCallback<ParseObject>() {
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> userSet, com.parse.ParseException e) {
+            public void done(ParseObject u, com.parse.ParseException e) {
+                if (u == null){
+                    Log.d("score", "The getFirst request failed.");
+                } else {
+                    userName = u.getString("username");
+                    currentXP = u.getInt("current_xp");
+                    levelNumber = u.getInt("level_number");
+                    questionSet = u.getInt("current_set");
 
-                ParseObject v = userSet.get(0);
 
-                userName = userSet.get(0).getString("username");
-                userLevel = userSet.get(0).getString("level");
-                currentXP = userSet.get(0).getInt("current_xp");
-                levelNumber = userSet.get(0).getInt("level_number");
+                    ParseQuery<ParseObject> queryScores = ParseQuery.getQuery("HighScore");
+                    queryScores.whereEqualTo("user", currentUser);
+                    queryScores.orderByDescending("score");
+                    queryScores.addDescendingOrder("date");
+                    queryScores.findInBackground(new FindCallback<ParseObject>() {
+                        public void done(List<ParseObject> highScoreList, ParseException e) {
+                            if (e == null) {
+                                Log.d("High Scores", "Retrieved " + highScoreList.size() + " scores");
+                                for (ParseObject po : highScoreList) {
 
-                setContentView(R.layout.activity_game_results);
-                setupResultsActivity();
+                                    String name = po.getString("name");
+                                    Date date = po.getDate("date");
+                                    int score = po.getInt("score");
+
+                                    HighScore h = new HighScore(date, name, score);
+                                    HighScoresRetrievedList.add(h);
+
+                                }
+
+                                if (HighScoresRetrievedList.size() == 0){
+                                    isHighScore = true;
+
+                                    //Enter new High Score
+                                    ParseObject highScore = new ParseObject("HighScore");
+                                    highScore.put("score", numberCorrect);
+                                    highScore.put("date", Calendar.getInstance().getTime());
+                                    highScore.put("name", userName);
+                                    highScore.saveInBackground();
+
+                                    //Delete lowest old high score
+                                    ParseQuery<ParseObject> queryScores2 = ParseQuery.getQuery("HighScore");
+                                    queryScores2.whereEqualTo("user", currentUser);
+                                    queryScores2.orderByAscending("score");
+                                    queryScores2.addAscendingOrder("date");
+                                    queryScores2.setLimit(1);
+                                    queryScores2.findInBackground(new FindCallback<ParseObject>() {
+                                        public void done(List<ParseObject> highScoreList, ParseException e) {
+                                            if (e == null) {
+                                                Log.d("High Scores", "Retrieved " + highScoreList.size() + " scores");
+                                                for (ParseObject po : highScoreList) {
+
+                                                    po.deleteInBackground();
+
+                                                }
+                                            } else {
+                                                Log.d("Goals", "Error: " + e.getMessage());
+                                            }
+                                        }
+                                    });
+                                } else if (numberCorrect >= HighScoresRetrievedList.get(HighScoresRetrievedList.size() - 1).getScore()) {
+
+                                    isHighScore = true;
+
+                                    //Enter new High Score
+                                    ParseObject highScore = new ParseObject("HighScore");
+                                    highScore.put("score", numberCorrect);
+                                    highScore.put("date", Calendar.getInstance().getTime());
+                                    highScore.put("name", userName);
+                                    highScore.saveInBackground();
+
+                                    //Delete lowest old high score
+                                    ParseQuery<ParseObject> queryScores2 = ParseQuery.getQuery("HighScore");
+                                    queryScores2.whereEqualTo("user", currentUser);
+                                    queryScores2.orderByAscending("score");
+                                    queryScores2.addAscendingOrder("date");
+                                    queryScores2.setLimit(1);
+                                    queryScores2.findInBackground(new FindCallback<ParseObject>() {
+                                        public void done(List<ParseObject> highScoreList, ParseException e) {
+                                            if (e == null) {
+                                                Log.d("High Scores", "Retrieved " + highScoreList.size() + " scores");
+                                                for (ParseObject po : highScoreList) {
+
+                                                    po.deleteInBackground();
+
+                                                }
+                                            } else {
+                                                Log.d("Goals", "Error: " + e.getMessage());
+                                            }
+                                        }
+                                    });
+                                }
+
+                                updateUserStats();
+
+                            } else {
+                                Log.d("Goals", "Error: " + e.getMessage());
+                            }
+                        }
+                    });
+                }
             }
         });
 
+    }
+
+    public void updateUserStats(){
+
+        //next question set
+        if (questionSet == 5){
+            questionSet = 1;
+        } else {
+            questionSet++;
+        }
+
+        //Calculate xp gained
+        gainedXP = (numberCorrect * 10)/2;
+
+        //Update xp
+        newXP = currentXP + gainedXP;
+
+        //Check for level up
+        if (newXP > 99){
+            newXP = newXP - 100;
+            if (levelNumber != 5){
+                levelNumber++;
+
+                new AlertDialog.Builder(this)
+                        .setMessage("You have been promoted to " + levels[levelNumber-1])
+                        .setTitle("Congratulations!")
+                        .setPositiveButton("close", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .show();
+            }
+        }
+
+        //Query to get user information
+        currentUser = ParseUser.getCurrentUser();
+
+        ParseQuery query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", currentUser.getObjectId());
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
+           @Override
+           public void done(ParseObject u, com.parse.ParseException e) {
+               if (u == null) {
+                   Log.d("score", "The getFirst request failed.");
+               } else {
+                   u.put("current_set", questionSet);
+                   u.put("current_xp", newXP);
+                   u.put("level_number", levelNumber);
+                   u.saveInBackground();
+               }
+           }
+        });
+        setContentView(R.layout.activity_game_results);
+        setupResultsActivity();
     }
 
     public void setupResultsActivity(){
@@ -78,19 +241,22 @@ public class GameResultsActivity extends Activity {
         userXpLeftTxtView = (TextView) findViewById(R.id.userxpleft);
         xpProgressBar = (ProgressBar) findViewById(R.id.progressbar);
         resultsTxtView = (TextView) findViewById(R.id.results);
+        highScoreTxtView = (TextView) findViewById(R.id.highscoretxt);
+
 
         userNameTxtView.setText(userName);
-        userLevelTxtView.setText(userLevel);
+        userLevelTxtView.setText(levels[levelNumber-1]);
         questionsCorrectTxtView.setText(numberCorrect + "/10");
         resultsTxtView.setPaintFlags(resultsTxtView.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
+        if (isHighScore){
+            highScoreTxtView.setVisibility(View.VISIBLE);
+        } else {
+            highScoreTxtView.setVisibility(View.INVISIBLE);
+        }
 
-        //Calculate xp gained
-        int xp = (numberCorrect * 10)/4;
-        xpGainedTxtView.setText("+" + xp + " xp");
 
-        //Update xp
-        int newXP = currentXP + xp;
+        xpGainedTxtView.setText("+" + gainedXP + " xp");
         userXpTxtView.setText(newXP + "/100 xp");
 
         //Set xp left to next level
@@ -98,6 +264,10 @@ public class GameResultsActivity extends Activity {
 
         //Set Progress Bar
         xpProgressBar.setProgress(newXP);
+
+        //Update User Account with round scores
+
+
 
         //initialize animations
         animAlphaQuestionsCorrect = AnimationUtils.loadAnimation(this,

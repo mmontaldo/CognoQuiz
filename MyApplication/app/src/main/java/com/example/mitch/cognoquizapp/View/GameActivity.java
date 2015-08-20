@@ -14,6 +14,7 @@ import com.example.mitch.cognoquizapp.R;
 import com.parse.FindCallback;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,55 +36,75 @@ public class GameActivity extends Activity {
     int currentQuestion;
     boolean resume = false;
     int numbercorrect;
+    int userCurrentSet;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Query to get Question Set
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Question");
+
+        //Query to get user's current question set
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
+        ParseQuery query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", currentUser.getObjectId());
         query.findInBackground(new FindCallback<ParseObject>() {
             @Override
-            public void done(List<ParseObject> questionSet, com.parse.ParseException e) {
-                if (e == null) {
-                    for (ParseObject q : questionSet) {
-                        Question new_q;
-                        int question_number = q.getInt("question_number");
-                        String question = q.getString("question");
-                        String answer = q.getString("answer");
-                        String explanation = q.getString("explanation");
-                        boolean isTF = q.getBoolean("isTF");
-                        String optionA, optionB, optionC, optionD;
-                        if (isTF == false){
-                            optionA = q.getString("optionA");
-                            optionB = q.getString("optionB");
-                            optionC = q.getString("optionC");
-                            optionD = q.getString("optionD");
-                            new_q = new Question(question_number, question, answer, explanation,
-                                    isTF, optionA, optionB, optionC, optionD);
-                        } else {
-                            new_q = new Question(question_number, question, answer, explanation, isTF);
+            public void done(List<ParseObject> userSet, com.parse.ParseException e) {
+
+                ParseObject v = userSet.get(0);
+                userCurrentSet = v.getInt("current_set");
+
+                //Query to get Question Set
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Question");
+                query.whereEqualTo("set_number", userCurrentSet);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> questionSet, com.parse.ParseException e) {
+                        if (e == null) {
+                            for (ParseObject q : questionSet) {
+                                Question new_q;
+                                int question_number = q.getInt("question_number");
+                                String question = q.getString("question");
+                                String answer = q.getString("answer");
+                                String explanation = q.getString("explanation");
+                                boolean isTF = q.getBoolean("isTF");
+                                String optionA, optionB, optionC, optionD;
+                                if (isTF == false) {
+                                    optionA = q.getString("optionA");
+                                    optionB = q.getString("optionB");
+                                    optionC = q.getString("optionC");
+                                    optionD = q.getString("optionD");
+                                    new_q = new Question(question_number, question, answer, explanation,
+                                            isTF, optionA, optionB, optionC, optionD);
+                                } else {
+                                    new_q = new Question(question_number, question, answer, explanation, isTF);
+                                }
+                                QuestionSet.add(new_q);
+                            }
+
+
+                            setContentView(R.layout.activity_game);
+                            questionBox = (Button) findViewById(R.id.questionbox);
+                            optionABox = (Button) findViewById(R.id.optionA);
+                            optionBBox = (Button) findViewById(R.id.optionB);
+                            optionCBox = (Button) findViewById(R.id.optionC);
+                            optionDBox = (Button) findViewById(R.id.optionD);
+                            questionNumTxtView = (TextView) findViewById(R.id.questionNum);
+
+                            currentQuestion = 1;
+                            numbercorrect = 0;
+
+                            setQuestion(QuestionSet.get(currentQuestion - 1));
+                            questionNumTxtView.setText("Question " + currentQuestion);
+                            resume = true;
                         }
-                        QuestionSet.add(new_q);
                     }
-
-                    setContentView(R.layout.activity_game);
-                    questionBox = (Button) findViewById(R.id.questionbox);
-                    optionABox = (Button) findViewById(R.id.optionA);
-                    optionBBox = (Button) findViewById(R.id.optionB);
-                    optionCBox = (Button) findViewById(R.id.optionC);
-                    optionDBox = (Button) findViewById(R.id.optionD);
-                    questionNumTxtView = (TextView) findViewById(R.id.questionNum);
-
-                    currentQuestion = 1;
-                    numbercorrect = 0;
-
-                    setQuestion(QuestionSet.get(currentQuestion - 1));
-                    questionNumTxtView.setText("Question " + currentQuestion);
-                    resume = true;
-                }
+                });
             }
         });
+
+
     }
 
     @Override

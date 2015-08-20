@@ -262,7 +262,11 @@ public class LoginScreenActivity extends Activity {
 
         // other fields can be set just like with ParseObject
         user.put("firstTime", true);
-
+        user.put("current_set", 1);
+        user.put("level_number", 1);
+        user.put("current_xp", 0);
+        user.put("avatar_name", "R.drawable.cogno");
+        
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(com.parse.ParseException e) {

@@ -1,7 +1,10 @@
 package com.example.mitch.cognoquizapp.View;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.mitch.cognoquizapp.R;
 import com.example.mitch.cognoquizapp.View.GameActivity;
+import com.parse.ParseUser;
 
 import java.util.Random;
 import java.util.Timer;
@@ -53,6 +57,7 @@ public class WelcomeScreenActivity extends Activity {
         characterImageView = (ImageView) findViewById(R.id.character_image);
         characterNameTxtView = (TextView) findViewById(R.id.character_name);
         characterDescTxtView = (TextView) findViewById(R.id.character_desc);
+     //   characterImageView.setImageResource(R.drawable.volo2);
 
         //initialize animations
         animAlphaAppear = AnimationUtils.loadAnimation(this,
@@ -114,8 +119,10 @@ public class WelcomeScreenActivity extends Activity {
                                 characterDescTxtView.setText(CharacterDescriptions[index]);
 
                                 if (CharacterNames[index].equals("Gemini Twins")){
+                                    ((BitmapDrawable)characterImageView.getDrawable()).getBitmap().recycle();
                                     characterImageView.setImageResource(R.drawable.gemini);
                                 } else {
+                                    ((BitmapDrawable)characterImageView.getDrawable()).getBitmap().recycle();
                                     String imageStr = CharacterNames[index].toLowerCase();
                                     int resourceId = getResources().getIdentifier(CharacterNames[index].toLowerCase(), "drawable", "com.example.mitch.cognoquizapp");
                                     characterImageView.setImageResource(resourceId);
@@ -167,6 +174,29 @@ public class WelcomeScreenActivity extends Activity {
 
     public void highScoresClick(View view){
         startActivity(new Intent(this, HighScoresActivity.class));
+    }
+
+    public void playerProfileClick(View view){
+        startActivity(new Intent(this, PlayerProfileActivity.class));
+    }
+
+    public void logoutClick(View view){
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to sign out?")
+                .setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ParseUser.logOut();
+                        Intent intent = new Intent(WelcomeScreenActivity.this, LoginScreenActivity.class);
+                        startActivity(intent);
+                        WelcomeScreenActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
     }
 
     @Override

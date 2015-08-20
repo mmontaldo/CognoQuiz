@@ -151,4 +151,17 @@
         android:onClick="mainMenuClick"
         android:layout_marginTop="15dp" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="High\nScore!"
+        android:id="@+id/highscoretxt"
+        android:textSize="40dp"
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/results"
+        android:layout_alignParentStart="true"
+        android:textColor="#FFFFFF"
+        android:gravity="center"/>
+
 </RelativeLayout>

@@ -1,10 +1,12 @@
 package com.example.mitch.cognoquizapp.Model;
 
+import java.util.Date;
+
 /**
  * Created by Mitch on 7/29/2015.
  */
 public class HighScore {
-    String date;
+    Date date;
     String name;
     int score;
     int rank;
@@ -13,7 +15,7 @@ public class HighScore {
 
     }
 
-    public HighScore(String date, String name, int score){
+    public HighScore(Date date, String name, int score){
         this.date = date;
         this.name = name;
         this.score = score;
@@ -21,7 +23,7 @@ public class HighScore {
     }
 
 
-    public String getDate(){
+    public Date getDate(){
         return date;
     }
 

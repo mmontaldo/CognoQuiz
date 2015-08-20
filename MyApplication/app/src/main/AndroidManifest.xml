@@ -63,6 +63,12 @@
             android:name=".View.HighScoresActivity"
             android:label="@string/title_activity_high_scores"
             android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".View.PlayerProfileActivity"
+            android:label="@string/title_activity_player_profile"
+            android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
     </application>

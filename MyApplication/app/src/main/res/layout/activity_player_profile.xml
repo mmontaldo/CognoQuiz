@@ -1,0 +1,167 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:background="@drawable/spacebkg"
+    tools:context="com.example.mitch.cognoquizapp.View.PlayerProfileActivity">
+
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:id="@+id/progressbar"
+        android:progressDrawable="@drawable/progress_bar_style"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true" />
+
+    <ImageButton
+        android:layout_width="220dp"
+        android:layout_height="220dp"
+        android:id="@+id/userAvatarPP"
+        android:scaleType="fitCenter"
+        android:src="@drawable/nonus"
+        android:background="@android:color/transparent"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="10dp" />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="25dp"
+        android:text="Change Avatar"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/changeAvatar"
+        android:textStyle="bold"
+        android:background="@drawable/button_change_avatar"
+        android:textSize="10dp"
+        android:textColor="#FFFFFF"
+        android:onClick="changeAvatarClick"
+        android:layout_below="@+id/userAvatarPP"
+        android:layout_marginLeft="60dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Username: mmontaldo"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/usernamePP"
+        android:gravity="center"
+        android:textColor="#FFFFFF"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/userAvatarPP"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="15dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Rank: Professor"
+        android:gravity="center"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/userlevelPP"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="0dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginTop="8dp"
+        android:layout_below="@+id/usernamePP"
+        android:layout_alignLeft="@+id/usernamePP" />
+
+    <View
+        android:layout_width="300dp"
+        android:layout_height="2dp"
+        android:background="#45FFFFFF"
+        android:layout_alignLeft="@+id/usernamePP"
+        android:layout_below="@+id/userlevelPP"
+        android:layout_marginTop="16dp"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Player Stats:"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/playerStats"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="0dp"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/userlevelPP"
+        android:layout_alignLeft="@+id/usernamePP" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Correct Answers: 35 of 50"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/questionsPP"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="0dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/playerStats"
+        android:layout_alignLeft="@+id/usernamePP" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Correct Percentage: 75%"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/percentagePP"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="0dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_marginTop="3dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/questionsPP"
+        android:layout_alignLeft="@+id/usernamePP" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Current XP: 60/100"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/userxpPP"
+        android:textColor="#FFFFFF"
+        android:layout_marginTop="3dp"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/percentagePP"
+        android:layout_alignLeft="@+id/usernamePP" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="40 xp to scientist"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/userxpleftPP"
+        android:textColor="#FFFFFF"
+        android:layout_marginLeft="10dp"
+        android:textSize="15dp"
+        android:textStyle="bold"
+        android:layout_above="@+id/progressbar"
+        android:layout_alignRight="@+id/progressbar" />
+
+
+</RelativeLayout>
