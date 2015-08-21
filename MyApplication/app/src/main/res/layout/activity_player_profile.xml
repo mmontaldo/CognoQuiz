@@ -12,7 +12,7 @@
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:id="@+id/progressbar"
+        android:id="@+id/progressbarPP"
         android:progressDrawable="@drawable/progress_bar_style"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -20,30 +20,46 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true" />
 
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="30dp"
+        android:text="Main Menu"
+        android:fontFamily="sans-serif-light"
+        android:id="@+id/mainmenuPP"
+        android:textStyle="bold"
+        android:background="@drawable/button_change_avatar"
+        android:layout_alignTop="@+id/linearLayout"
+        android:textSize="12dp"
+        android:textColor="#FFFFFF"
+        android:onClick="mainMenuClick"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="5dp" />
+
     <ImageButton
-        android:layout_width="220dp"
-        android:layout_height="220dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:id="@+id/userAvatarPP"
         android:scaleType="fitCenter"
         android:src="@drawable/nonus"
         android:background="@android:color/transparent"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="0dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="45dp"
+        android:layout_marginLeft="20dp" />
 
     <Button
-        android:layout_width="100dp"
-        android:layout_height="25dp"
-        android:text="Change Avatar"
+        android:layout_width="110dp"
+        android:layout_height="30dp"
+        android:text="Change Character"
         android:fontFamily="sans-serif-light"
         android:id="@+id/changeAvatar"
         android:textStyle="bold"
         android:background="@drawable/button_change_avatar"
-        android:textSize="10dp"
+        android:textSize="12dp"
         android:textColor="#FFFFFF"
         android:onClick="changeAvatarClick"
         android:layout_below="@+id/userAvatarPP"
-        android:layout_marginLeft="60dp"
+        android:layout_marginLeft="66dp"
         android:layout_marginTop="10dp"/>
 
     <TextView
@@ -59,8 +75,8 @@
         android:textStyle="bold"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/userAvatarPP"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="15dp" />
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="25dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -74,7 +90,7 @@
         android:layout_marginLeft="0dp"
         android:textSize="25dp"
         android:textStyle="bold"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="0dp"
         android:layout_below="@+id/usernamePP"
         android:layout_alignLeft="@+id/usernamePP" />
 
@@ -114,7 +130,7 @@
         android:layout_marginLeft="0dp"
         android:textSize="20dp"
         android:textStyle="bold"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="5dp"
         android:layout_alignParentEnd="true"
         android:layout_below="@+id/playerStats"
         android:layout_alignLeft="@+id/usernamePP" />
@@ -160,8 +176,8 @@
         android:layout_marginLeft="10dp"
         android:textSize="15dp"
         android:textStyle="bold"
-        android:layout_above="@+id/progressbar"
-        android:layout_alignRight="@+id/progressbar" />
+        android:layout_above="@+id/progressbarPP"
+        android:layout_alignRight="@+id/progressbarPP" />
 
 
 </RelativeLayout>

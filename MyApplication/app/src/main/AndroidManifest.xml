@@ -69,6 +69,12 @@
             android:name=".View.PlayerProfileActivity"
             android:label="@string/title_activity_player_profile"
             android:screenOrientation="landscape"
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+        </activity>
+        <activity
+            android:name=".View.ChangeAvatarActivity"
+            android:label="@string/title_activity_change_avatar"
+            android:screenOrientation="landscape"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen">
         </activity>
     </application>

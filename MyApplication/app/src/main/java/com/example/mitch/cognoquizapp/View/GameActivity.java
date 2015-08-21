@@ -42,6 +42,7 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        setContentView(R.layout.newgame_loading_screen);
 
         //Query to get user's current question set
         ParseUser currentUser = ParseUser.getCurrentUser();

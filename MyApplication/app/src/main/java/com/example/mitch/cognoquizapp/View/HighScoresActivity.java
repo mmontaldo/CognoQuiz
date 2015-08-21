@@ -41,7 +41,9 @@ public class HighScoresActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_high_scores);
+        setContentView(R.layout.high_scores_loading_screen);
+
+        CustomListView = this;
 
         setListData();
     }
@@ -60,6 +62,7 @@ public class HighScoresActivity extends Activity {
         query.findInBackground(new FindCallback<ParseObject>() {
             public void done(List<ParseObject> highScoreList, ParseException e) {
                 if (e == null) {
+                    setContentView(R.layout.activity_high_scores);
                     Log.d("High Scores", "Retrieved " + highScoreList.size() + " scores");
                     for(ParseObject po: highScoreList) {
 
@@ -72,9 +75,15 @@ public class HighScoresActivity extends Activity {
 
                     }
 
-                    CustomListViewValuesArr.get(0).setRank(1);
-                    CustomListViewValuesArr.get(1).setRank(2);
-                    CustomListViewValuesArr.get(2).setRank(3);
+                    if (CustomListViewValuesArr.size() > 0) {
+                        CustomListViewValuesArr.get(0).setRank(1);
+                    }
+                    if (CustomListViewValuesArr.size() > 1) {
+                        CustomListViewValuesArr.get(1).setRank(2);
+                    }
+                    if (CustomListViewValuesArr.size() > 2) {
+                        CustomListViewValuesArr.get(2).setRank(3);
+                    }
                     Resources res = getResources();
                     list = ( ListView )findViewById( R.id.list );  // List defined in XML ( See Below )
 

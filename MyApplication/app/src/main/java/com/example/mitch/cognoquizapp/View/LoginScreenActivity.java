@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.mitch.cognoquizapp.R;
 import com.parse.LogInCallback;
@@ -260,21 +261,26 @@ public class LoginScreenActivity extends Activity {
         user.setPassword(password);
         user.setEmail(email);
 
-        // other fields can be set just like with ParseObject
+        // initialize fields
         user.put("firstTime", true);
         user.put("current_set", 1);
         user.put("level_number", 1);
         user.put("current_xp", 0);
         user.put("avatar_name", "R.drawable.cogno");
+        user.put("total_questions_correct", 0);
+        user.put("total_questions", 0);
         
 
         user.signUpInBackground(new SignUpCallback() {
             public void done(com.parse.ParseException e) {
                 if (e == null) {
+                    setContentView(R.layout.signup_loading_screen);
                     Log.v("SIGN UP", "REACHED END");
                     startActivity(new Intent(LoginScreenActivity.this, WelcomeScreenActivity.class));
                     // Hooray! Let them use the app now.
                 } else {
+                    Toast.makeText(getApplicationContext(), e.getMessage(),
+                            Toast.LENGTH_LONG).show();
                     Log.v("SIGN UP", e.getMessage());
                     Log.v("SIGN UP", "REACHED ERROR");
                     // Sign up didn't succeed. Look at the ParseException
@@ -285,6 +291,7 @@ public class LoginScreenActivity extends Activity {
     }
 
     public void logInButton2Click(View v){
+        setContentView(R.layout.login_loading_screen);
         String username = userEdTxt.getText().toString();
         String password = passEdTxt.getText().toString();
 

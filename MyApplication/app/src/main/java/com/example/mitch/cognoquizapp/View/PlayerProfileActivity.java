@@ -1,57 +1,113 @@
 package com.example.mitch.cognoquizapp.View;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.mitch.cognoquizapp.R;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.parse.GetCallback;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 public class PlayerProfileActivity extends Activity {
+
+    String userName;
+    int currentXP;
+    int levelNumber;
+    int correctQuestions;
+    int totalQuestions;
+    String avatarName;
+    TextView userNameTxtView;
+    TextView userLevelTxtView;
+    TextView questionsTxtView;
+    TextView questionsPercentTxtView;
+    TextView userXpTxtView;
+    TextView userXpLeftTxtView;
+    ProgressBar xpProgressBar;
+    ImageView userImgView;
+    String[] levels = {"Student","Intern","Professor","Scientist","Master"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_player_profile);
-    }
+        setContentView(R.layout.player_profile_loading_screen);
 
-    public void changeAvatarClick(View view){
-        showAlertDialog();
-    }
+        //Retrieve user information
 
-    private void showAlertDialog() {
-        // Prepare grid view
-        GridView gridView = new GridView(this);
+        //Query to get user information
+        ParseUser currentUser = ParseUser.getCurrentUser();
 
-        List<Integer> mList = new ArrayList<Integer>();
-        for (int i = 1; i < 36; i++) {
-            mList.add(i);
-        }
-
-        gridView.setAdapter(new ArrayAdapter(this, android.R.layout.simple_list_item_1, mList));
-        gridView.setNumColumns(5);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        ParseQuery query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", currentUser.getObjectId());
+        query.getFirstInBackground(new GetCallback<ParseObject>() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                // do something here
+            public void done(ParseObject u, com.parse.ParseException e) {
+                if (u == null) {
+                    Log.d("score", "The getFirst request failed.");
+                } else {
+                    userName = u.getString("username");
+                    currentXP = u.getInt("current_xp");
+                    levelNumber = u.getInt("level_number");
+                    correctQuestions = u.getInt("total_questions_correct");
+                    totalQuestions = u.getInt("total_questions");
+                    avatarName = u.getString("avatar_name");
+
+                    setView();
+                }
             }
         });
-
-        // Set grid view to alertDialog
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setView(gridView);
-        builder.setTitle("Goto");
-        builder.show();
     }
+
+    public void setView(){
+        setContentView(R.layout.activity_player_profile);
+
+        userNameTxtView = (TextView) findViewById(R.id.usernamePP);
+        userLevelTxtView = (TextView) findViewById(R.id.userlevelPP);
+        questionsTxtView = (TextView) findViewById(R.id.questionsPP);
+        questionsPercentTxtView = (TextView) findViewById((R.id.percentagePP));
+        userXpTxtView = (TextView) findViewById(R.id.userxpPP);
+        userXpLeftTxtView = (TextView) findViewById(R.id.userxpleftPP);
+        userImgView = (ImageView) findViewById(R.id.userAvatarPP);
+        xpProgressBar = (ProgressBar) findViewById(R.id.progressbarPP);
+
+        userNameTxtView.setText(userName);
+        userLevelTxtView.setText(levels[levelNumber-1]);
+        questionsTxtView.setText("Correct Answers: " + correctQuestions + " of " + totalQuestions);
+        userXpTxtView.setText("Current XP: " + currentXP + "/100 xp");
+        userXpLeftTxtView.setText(100-currentXP + " xp to " + levels[levelNumber]);
+
+        if (totalQuestions == 0){
+            questionsPercentTxtView.setText("Correct Percentage: 0%");
+        } else {
+            questionsPercentTxtView.setText("Correct Percentage: " + (int)((correctQuestions * 100.0f) / totalQuestions) + "%");
+        }
+
+        int imageResource = getResources().getIdentifier(avatarName.substring(11, avatarName.length()), "drawable", this.getPackageName());
+        Drawable image = getResources().getDrawable(imageResource);
+        userImgView.setImageDrawable(image);
+
+
+        //Set Progress Bar
+        xpProgressBar.setProgress(currentXP);
+
+    }
+    public void changeAvatarClick(View view){
+        startActivity(new Intent(this, ChangeAvatarActivity.class));
+    }
+
+    public void mainMenuClick(View view){
+        startActivity(new Intent(this, WelcomeScreenActivity.class));
+    }
+
 
     @Override
 

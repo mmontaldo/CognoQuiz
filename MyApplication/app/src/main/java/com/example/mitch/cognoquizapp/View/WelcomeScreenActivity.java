@@ -68,7 +68,7 @@ public class WelcomeScreenActivity extends Activity {
 
         Random rand = new Random();
 
-        index = rand.nextInt(12);
+        index = rand.nextInt(11);
 
         //set initial character
         characterNameTxtView.setText(CharacterNames[index]);
@@ -119,10 +119,8 @@ public class WelcomeScreenActivity extends Activity {
                                 characterDescTxtView.setText(CharacterDescriptions[index]);
 
                                 if (CharacterNames[index].equals("Gemini Twins")){
-                                    ((BitmapDrawable)characterImageView.getDrawable()).getBitmap().recycle();
                                     characterImageView.setImageResource(R.drawable.gemini);
                                 } else {
-                                    ((BitmapDrawable)characterImageView.getDrawable()).getBitmap().recycle();
                                     String imageStr = CharacterNames[index].toLowerCase();
                                     int resourceId = getResources().getIdentifier(CharacterNames[index].toLowerCase(), "drawable", "com.example.mitch.cognoquizapp");
                                     characterImageView.setImageResource(resourceId);

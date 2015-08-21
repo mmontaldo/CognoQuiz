@@ -16,5 +16,6 @@
     <string name="Results"><u>Results</u></string>
     <string name="title_activity_high_scores">HighScoresActivity</string>
     <string name="title_activity_player_profile">PlayerProfileActivity</string>
+    <string name="title_activity_change_avatar">ChangeAvatarActivity</string>
 
 </resources>

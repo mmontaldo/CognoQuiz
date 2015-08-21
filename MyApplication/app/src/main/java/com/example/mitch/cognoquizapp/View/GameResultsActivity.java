@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -13,11 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.ListView;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.example.mitch.cognoquizapp.Controller.HighScoresCustomAdapter;
 import com.example.mitch.cognoquizapp.Model.HighScore;
 import com.example.mitch.cognoquizapp.R;
 import com.parse.FindCallback;
@@ -29,7 +28,6 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -45,10 +43,14 @@ public class GameResultsActivity extends Activity {
     TextView resultsTxtView;
     TextView highScoreTxtView;
     ProgressBar xpProgressBar;
+    ImageView userImgView;
     Animation animAlphaQuestionsCorrect = null;
     Animation animAlphaXpGained = null;
     int numberCorrect;
     String userName;
+    String avatarName;
+    int totalQuestions;
+    int correctQuestions;
     int gainedXP;
     int currentXP;
     int newXP;
@@ -62,6 +64,7 @@ public class GameResultsActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.game_finished_loading_screen);
         Intent intent = getIntent();
         numberCorrect = intent.getIntExtra("numberCorrect", 0);
 
@@ -80,6 +83,10 @@ public class GameResultsActivity extends Activity {
                     currentXP = u.getInt("current_xp");
                     levelNumber = u.getInt("level_number");
                     questionSet = u.getInt("current_set");
+                    avatarName = u.getString("avatar_name");
+                    totalQuestions = u.getInt("total_questions");
+                    correctQuestions = u.getInt("total_questions_correct");
+
 
 
                     ParseQuery<ParseObject> queryScores = ParseQuery.getQuery("HighScore");
@@ -101,7 +108,7 @@ public class GameResultsActivity extends Activity {
 
                                 }
 
-                                if (HighScoresRetrievedList.size() == 0){
+                                if (HighScoresRetrievedList.size() < 5){
                                     isHighScore = true;
 
                                     //Enter new High Score
@@ -109,28 +116,9 @@ public class GameResultsActivity extends Activity {
                                     highScore.put("score", numberCorrect);
                                     highScore.put("date", Calendar.getInstance().getTime());
                                     highScore.put("name", userName);
+                                    highScore.put("user", currentUser);
                                     highScore.saveInBackground();
 
-                                    //Delete lowest old high score
-                                    ParseQuery<ParseObject> queryScores2 = ParseQuery.getQuery("HighScore");
-                                    queryScores2.whereEqualTo("user", currentUser);
-                                    queryScores2.orderByAscending("score");
-                                    queryScores2.addAscendingOrder("date");
-                                    queryScores2.setLimit(1);
-                                    queryScores2.findInBackground(new FindCallback<ParseObject>() {
-                                        public void done(List<ParseObject> highScoreList, ParseException e) {
-                                            if (e == null) {
-                                                Log.d("High Scores", "Retrieved " + highScoreList.size() + " scores");
-                                                for (ParseObject po : highScoreList) {
-
-                                                    po.deleteInBackground();
-
-                                                }
-                                            } else {
-                                                Log.d("Goals", "Error: " + e.getMessage());
-                                            }
-                                        }
-                                    });
                                 } else if (numberCorrect >= HighScoresRetrievedList.get(HighScoresRetrievedList.size() - 1).getScore()) {
 
                                     isHighScore = true;
@@ -140,6 +128,7 @@ public class GameResultsActivity extends Activity {
                                     highScore.put("score", numberCorrect);
                                     highScore.put("date", Calendar.getInstance().getTime());
                                     highScore.put("name", userName);
+                                    highScore.put("user", currentUser);
                                     highScore.saveInBackground();
 
                                     //Delete lowest old high score
@@ -224,6 +213,8 @@ public class GameResultsActivity extends Activity {
                    u.put("current_set", questionSet);
                    u.put("current_xp", newXP);
                    u.put("level_number", levelNumber);
+                   u.put("total_questions", totalQuestions + 10);
+                   u.put("total_questions_correct", correctQuestions + numberCorrect);
                    u.saveInBackground();
                }
            }
@@ -239,10 +230,15 @@ public class GameResultsActivity extends Activity {
         userLevelTxtView = (TextView) findViewById(R.id.userlevel);
         userXpTxtView = (TextView) findViewById(R.id.userxp);
         userXpLeftTxtView = (TextView) findViewById(R.id.userxpleft);
-        xpProgressBar = (ProgressBar) findViewById(R.id.progressbar);
+        xpProgressBar = (ProgressBar) findViewById(R.id.progressbarPP);
         resultsTxtView = (TextView) findViewById(R.id.results);
         highScoreTxtView = (TextView) findViewById(R.id.highscoretxt);
+        userImgView = (ImageView) findViewById(R.id.userAvatar);
 
+        //set user avatar
+        int imageResource = getResources().getIdentifier(avatarName.substring(11, avatarName.length()), "drawable", this.getPackageName());
+        Drawable image = getResources().getDrawable(imageResource);
+        userImgView.setImageDrawable(image);
 
         userNameTxtView.setText(userName);
         userLevelTxtView.setText(levels[levelNumber-1]);
@@ -264,10 +260,6 @@ public class GameResultsActivity extends Activity {
 
         //Set Progress Bar
         xpProgressBar.setProgress(newXP);
-
-        //Update User Account with round scores
-
-
 
         //initialize animations
         animAlphaQuestionsCorrect = AnimationUtils.loadAnimation(this,
