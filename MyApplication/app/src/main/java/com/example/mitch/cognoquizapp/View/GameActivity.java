@@ -3,11 +3,14 @@ package com.example.mitch.cognoquizapp.View;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.media.MediaPlayer;
 
 import com.example.mitch.cognoquizapp.Model.Question;
 import com.example.mitch.cognoquizapp.R;
@@ -25,7 +28,11 @@ public class GameActivity extends Activity {
 
     public ArrayList<Question> QuestionSet = new ArrayList<Question>();
 
+    private static final int SPEECH_REQUEST_CODE = 0;
+
     public final static String CORRECTNESS_MESSAGE = "com.example.mitch.cognoquizapp.MESSAGE";
+
+    public static MediaPlayer player;
 
     Button questionBox;
     Button optionABox;
@@ -35,8 +42,10 @@ public class GameActivity extends Activity {
     TextView questionNumTxtView;
     int currentQuestion;
     boolean resume = false;
+    boolean newquestion = false;
     int numbercorrect;
     int userCurrentSet;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +93,8 @@ public class GameActivity extends Activity {
                                 QuestionSet.add(new_q);
                             }
 
+                            player = MediaPlayer.create(GameActivity.this,R.raw.cogno_music);
+                            player.start();
 
                             setContentView(R.layout.activity_game);
                             questionBox = (Button) findViewById(R.id.questionbox);
@@ -104,17 +115,16 @@ public class GameActivity extends Activity {
                 });
             }
         });
-
-
     }
 
     @Override
     protected void onResume(){
         super.onResume();
-        if (resume) {
+        if (resume && newquestion) {
             currentQuestion++;
             questionNumTxtView.setText("Question " + currentQuestion);
             setQuestion(QuestionSet.get(currentQuestion - 1));
+            newquestion = false;
         }
     }
 
@@ -137,6 +147,10 @@ public class GameActivity extends Activity {
         }
     }
 
+    public void speechButtonClick(View view){
+        displaySpeechRecognizer();
+    }
+
     public void optionAClick(View view){
         Question q = QuestionSet.get(currentQuestion-1);
         Intent intent = new Intent(this, GameAnswerActivity.class);
@@ -154,13 +168,13 @@ public class GameActivity extends Activity {
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             } else {
                 String message = "incorrect";
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         } else {
             if (q.getAnswer().equals(q.getOptionA())){
@@ -169,13 +183,13 @@ public class GameActivity extends Activity {
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             } else {
                 String message = "incorrect";
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         }
     }
@@ -198,13 +212,13 @@ public class GameActivity extends Activity {
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             } else {
                 String message = "incorrect";
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         } else {
             if (q.getAnswer().equals(q.getOptionB())){
@@ -213,13 +227,13 @@ public class GameActivity extends Activity {
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             } else {
                 String message = "incorrect";
                 intent.putExtra(CORRECTNESS_MESSAGE, message);
                 intent.putExtra("question", q);
                 intent.putExtra("numberCorrect", numbercorrect);
-                startActivity(intent);
+                startActivityForResult(intent, 1);
             }
         }
     }
@@ -241,13 +255,13 @@ public class GameActivity extends Activity {
             intent.putExtra(CORRECTNESS_MESSAGE, message);
             intent.putExtra("question", q);
             intent.putExtra("numberCorrect", numbercorrect);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         } else {
             String message = "incorrect";
             intent.putExtra(CORRECTNESS_MESSAGE, message);
             intent.putExtra("question", q);
             intent.putExtra("numberCorrect", numbercorrect);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         }
     }
 
@@ -268,14 +282,77 @@ public class GameActivity extends Activity {
             intent.putExtra(CORRECTNESS_MESSAGE, message);
             intent.putExtra("question", q);
             intent.putExtra("numberCorrect", numbercorrect);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         } else {
             String message = "incorrect";
             intent.putExtra(CORRECTNESS_MESSAGE, message);
             intent.putExtra("question", q);
             intent.putExtra("numberCorrect", numbercorrect);
-            startActivity(intent);
+            startActivityForResult(intent, 1);
         }
+    }
+
+
+    // Create an intent that can start the Speech Recognizer activity
+    private void displaySpeechRecognizer() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        // Start the activity, the intent will be populated with the speech text
+        startActivityForResult(intent, SPEECH_REQUEST_CODE);
+    }
+
+    // This callback is invoked when the Speech Recognizer returns.
+    // This is where you process the intent and extract the speech text from the intent.
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode,
+                                    Intent data) {
+        //Results from Speech Recognition
+        if (requestCode == SPEECH_REQUEST_CODE && resultCode == RESULT_OK) {
+            List<String> results = data.getStringArrayListExtra(
+                    RecognizerIntent.EXTRA_RESULTS);
+            if (results != null){
+                String spokenText = results.get(0).toLowerCase();
+                if (QuestionSet.get(currentQuestion - 1).getTF()){
+                    if (spokenText.equals("true")){
+                        optionABox.performClick();
+                    } else if (spokenText.equals("false")) {
+                        optionBBox.performClick();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "\"" + spokenText + "\" is not an answer. Please try again.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                } else {
+                    if (spokenText.equals(QuestionSet.get(currentQuestion - 1).getOptionA().toLowerCase())) {
+                        optionABox.performClick();
+                    } else if (spokenText.equals(QuestionSet.get(currentQuestion - 1).getOptionB().toLowerCase())) {
+                        optionBBox.performClick();
+                    } else if (spokenText.equals(QuestionSet.get(currentQuestion - 1).getOptionC().toLowerCase())) {
+                        optionCBox.performClick();
+                    } else if (spokenText.equals(QuestionSet.get(currentQuestion - 1).getOptionD().toLowerCase())) {
+                        optionDBox.performClick();
+                    } else {
+                        Toast.makeText(getApplicationContext(), "\"" + spokenText + "\" is not an answer. Please try again.",
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+            } else {
+                Toast.makeText(getApplicationContext(), "Please try again.",
+                        Toast.LENGTH_LONG).show();
+            }
+        }
+        // Result from game answer activity
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                Bundle b = data.getExtras();
+                if (b != null) {
+                    newquestion = (boolean) b.getSerializable("returnCheck");
+                }
+            } else if (resultCode == 0) {
+                System.out.println("RESULT CANCELLED");
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override

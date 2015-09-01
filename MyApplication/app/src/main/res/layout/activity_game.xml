@@ -16,13 +16,13 @@
         android:layout_centerHorizontal="true"
         android:textColor="#FFFFFF"
         android:layout_alignParentTop="true"
-        android:textSize="16dp" />
+        android:textSize="20dp" />
 
     <Button
         android:id="@+id/questionbox"
-        android:text="                                                                                                                  "
+        android:text=""
         android:textColor="#FFFFFF"
-        android:textSize="15sp"
+        android:textSize="16sp"
         android:fontFamily="sans-serif-light"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:padding="10dp"
@@ -34,13 +34,25 @@
         android:clickable="false"
         android:layout_below="@+id/questionNum"/>
 
+    <ImageButton
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/voice"
+        android:id="@+id/voiceBtn"
+        android:layout_gravity="center_horizontal"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/questionbox"
+        android:layout_marginTop="10dp"
+        android:onClick="speechButtonClick"/>
+
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="500dp"
+        android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_alignParentTop="true"
-        android:paddingTop="70dp"
         android:layout_centerHorizontal="true"
+        android:layout_below="@+id/voiceBtn"
+        android:layout_marginTop="10dp"
         >
 
         <LinearLayout
@@ -48,7 +60,9 @@
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
-            android:layout_marginTop="60dp"
+            android:weightSum="2"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             >
 
             <Button
@@ -59,7 +73,8 @@
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
-                android:layout_width="240dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="fill_parent"
                 android:background="@drawable/buttonshape"
                 android:textStyle="bold"
@@ -75,7 +90,8 @@
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
-                android:layout_width="240dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_height="fill_parent"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/buttonshape"
@@ -87,10 +103,14 @@
         </LinearLayout>
 
         <LinearLayout
+            android:baselineAligned="false"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="70dp"
             android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:weightSum="2"
             >
 
             <Button
@@ -101,8 +121,9 @@
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
-                android:layout_width="240dp"
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:background="@drawable/buttonshape"
                 android:textStyle="bold"
                 android:onClick="optionCClick"
@@ -116,8 +137,9 @@
                 android:fontFamily="sans-serif-light"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:padding="10dp"
-                android:layout_width="240dp"
+                android:layout_width="0dp"
                 android:layout_height="fill_parent"
+                android:layout_weight="1"
                 android:layout_marginLeft="20dp"
                 android:background="@drawable/buttonshape"
                 android:textStyle="bold"

@@ -29,12 +29,21 @@ public class ChangeAvatarActivity extends Activity {
             R.drawable.volo
     };
 
+    private int[] smallCharImages = {
+            R.drawable.cellosmall, R.drawable.chronasmall,
+            R.drawable.cognosmall, R.drawable.furtusmall,
+            R.drawable.geminismall, R.drawable.komodosmall,
+            R.drawable.maraudersmall, R.drawable.nonussmall,
+            R.drawable.phonicasmall, R.drawable.undulasmall,
+            R.drawable.volosmall
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_avatar);
         gv=(GridView) findViewById(R.id.gridview);
-        gv.setAdapter(new ChangeAvatarCustomAdapter(this, charNameList, charImages));
+        gv.setAdapter(new ChangeAvatarCustomAdapter(this, charNameList, charImages, smallCharImages));
 
     }
 

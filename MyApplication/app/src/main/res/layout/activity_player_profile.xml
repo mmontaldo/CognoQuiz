@@ -21,150 +21,142 @@
         android:layout_alignParentBottom="true" />
 
     <Button
-        android:layout_width="80dp"
-        android:layout_height="30dp"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
         android:text="Main Menu"
         android:fontFamily="sans-serif-light"
         android:id="@+id/mainmenuPP"
         android:textStyle="bold"
         android:background="@drawable/button_change_avatar"
-        android:layout_alignTop="@+id/linearLayout"
-        android:textSize="12dp"
+        android:textSize="15dp"
         android:textColor="#FFFFFF"
-        android:onClick="mainMenuClick"
-        android:layout_marginLeft="5dp"
-        android:layout_marginTop="5dp" />
+        android:onClick="mainMenuClick" />
 
-    <ImageButton
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:id="@+id/userAvatarPP"
-        android:scaleType="fitCenter"
-        android:src="@drawable/nonus"
-        android:background="@android:color/transparent"
-        android:layout_alignParentStart="true"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="45dp"
-        android:layout_marginLeft="20dp" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="2">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginBottom="60dp"
+            android:layout_marginTop="50dp"
+            android:layout_weight="1"
+            android:weightSum="8">
+            <ImageButton
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:id="@+id/userAvatarPP"
+                android:scaleType="fitCenter"
+                android:src="@drawable/nonus"
+                android:background="@android:color/transparent"
+                android:layout_weight="7"/>
 
-    <Button
-        android:layout_width="110dp"
-        android:layout_height="30dp"
-        android:text="Change Character"
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/changeAvatar"
-        android:textStyle="bold"
-        android:background="@drawable/button_change_avatar"
-        android:textSize="12dp"
-        android:textColor="#FFFFFF"
-        android:onClick="changeAvatarClick"
-        android:layout_below="@+id/userAvatarPP"
-        android:layout_marginLeft="66dp"
-        android:layout_marginTop="10dp"/>
+            <Button
+                android:layout_width="90dp"
+                android:layout_height="0dp"
+                android:text="Change Character"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/changeAvatar"
+                android:textStyle="bold"
+                android:background="@drawable/button_change_avatar"
+                android:textSize="15dp"
+                android:textColor="#FFFFFF"
+                android:onClick="changeAvatarClick"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:layout_weight="1"/>
+        </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Username: mmontaldo"
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/usernamePP"
-        android:gravity="center"
-        android:textColor="#FFFFFF"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/userAvatarPP"
-        android:layout_marginTop="30dp"
-        android:layout_marginLeft="25dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1"
+            android:layout_gravity="center">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Rank: Professor"
-        android:gravity="center"
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/userlevelPP"
-        android:textColor="#FFFFFF"
-        android:layout_marginLeft="0dp"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginTop="0dp"
-        android:layout_below="@+id/usernamePP"
-        android:layout_alignLeft="@+id/usernamePP" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Username: mmontaldo"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/usernamePP"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
-    <View
-        android:layout_width="300dp"
-        android:layout_height="2dp"
-        android:background="#45FFFFFF"
-        android:layout_alignLeft="@+id/usernamePP"
-        android:layout_below="@+id/userlevelPP"
-        android:layout_marginTop="16dp"
-        />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Rank: Professor"
+                android:gravity="center"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/userlevelPP"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Player Stats:"
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/playerStats"
-        android:textColor="#FFFFFF"
-        android:layout_marginLeft="0dp"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        android:layout_marginTop="32dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/userlevelPP"
-        android:layout_alignLeft="@+id/usernamePP" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_height="2dp"
+                android:background="#45FFFFFF"
+                />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Correct Answers: 35 of 50"
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/questionsPP"
-        android:textColor="#FFFFFF"
-        android:layout_marginLeft="0dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/playerStats"
-        android:layout_alignLeft="@+id/usernamePP" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Player Stats:"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/playerStats"
+                android:textColor="#FFFFFF"
+                android:textSize="25dp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Correct Percentage: 75%"
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/percentagePP"
-        android:textColor="#FFFFFF"
-        android:layout_marginLeft="0dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_marginTop="3dp"
-        android:layout_alignParentEnd="true"
-        android:layout_below="@+id/questionsPP"
-        android:layout_alignLeft="@+id/usernamePP" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Correct Answers: 35 of 50"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/questionsPP"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Current XP: 60/100"
-        android:fontFamily="sans-serif-light"
-        android:id="@+id/userxpPP"
-        android:textColor="#FFFFFF"
-        android:layout_marginTop="3dp"
-        android:textSize="20dp"
-        android:textStyle="bold"
-        android:layout_below="@+id/percentagePP"
-        android:layout_alignLeft="@+id/usernamePP" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Correct Percentage: 75%"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/percentagePP"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Current XP: 60/100"
+                android:fontFamily="sans-serif-light"
+                android:id="@+id/userxpPP"
+                android:textColor="#FFFFFF"
+                android:textSize="20dp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

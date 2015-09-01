@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +25,8 @@ public class GameAnswerActivity extends Activity {
     Button nextQuestionBtn;
     Question question;
     int numberCorrect;
+    MediaPlayer playerCorrect;
+    MediaPlayer playerIncorrect;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +46,12 @@ public class GameAnswerActivity extends Activity {
 
         if (correctness.equals("correct")){
             correctnessTextView.setText("Correct!");
+            playerCorrect = MediaPlayer.create(GameAnswerActivity.this,R.raw.correct);
+            playerCorrect.start();
         } else {
             correctnessTextView.setText("Oops, not quite!");
+            playerIncorrect = MediaPlayer.create(GameAnswerActivity.this,R.raw.wrong);
+            playerIncorrect.start();
         }
 
         if (isFinished){
@@ -72,10 +79,14 @@ public class GameAnswerActivity extends Activity {
     public void nextQuestionClick(View view){
         String buttonText = nextQuestionBtn.getText().toString();
         if (buttonText.equals("Next Question")) {
+            Intent intent = new Intent();
+            intent.putExtra("returnCheck", true);
+            setResult(Activity.RESULT_OK, intent);
             finish();
         } else {
             Intent intent = new Intent(this, GameResultsActivity.class);
             intent.putExtra("numberCorrect", numberCorrect);
+            GameActivity.player.pause();
             startActivity(intent);
         }
     }

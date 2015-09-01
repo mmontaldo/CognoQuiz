@@ -35,12 +35,15 @@ public class ChangeAvatarCustomAdapter extends BaseAdapter {
     String [] result;
     Context context;
     int [] imageId;
+    int [] smallImageId;
     private static LayoutInflater inflater=null;
-    public ChangeAvatarCustomAdapter(Activity mainActivity, String[] charNameList, int[] charImages) {
+
+    public ChangeAvatarCustomAdapter(Activity mainActivity, String[] charNameList, int[] charImages, int[] smallImages) {
 
         result = charNameList;
         context = mainActivity;
         imageId = charImages;
+        smallImageId = smallImages;
         inflater = ( LayoutInflater )context.
                 getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -97,7 +100,8 @@ public class ChangeAvatarCustomAdapter extends BaseAdapter {
                                 // do nothing
                             }
                         })
-                        .setIcon(imageId[position])
+                        .setIcon(R.drawable.guy)
+                        .setIcon(smallImageId[position])
                         .show();
 
             }
