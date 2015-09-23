@@ -43,6 +43,7 @@ public class GameActivity extends Activity {
     int currentQuestion;
     boolean resume = false;
     boolean newquestion = false;
+    boolean pauseMusic = true;
     int numbercorrect;
     int userCurrentSet;
 
@@ -93,7 +94,8 @@ public class GameActivity extends Activity {
                                 QuestionSet.add(new_q);
                             }
 
-                            player = MediaPlayer.create(GameActivity.this,R.raw.cogno_music);
+                            player = MediaPlayer.create(GameActivity.this,R.raw.cogno_game_score);
+                            player.setLooping(true);
                             player.start();
 
                             setContentView(R.layout.activity_game);
@@ -126,6 +128,24 @@ public class GameActivity extends Activity {
             setQuestion(QuestionSet.get(currentQuestion - 1));
             newquestion = false;
         }
+        if (resume && !player.isPlaying()){
+            player = MediaPlayer.create(GameActivity.this,R.raw.cogno_game_score);
+            player.setLooping(true);
+            player.start();
+
+        }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if (pauseMusic) {
+            player.stop();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     public void setQuestion(Question q) {
@@ -152,6 +172,7 @@ public class GameActivity extends Activity {
     }
 
     public void optionAClick(View view){
+        pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
         Intent intent = new Intent(this, GameAnswerActivity.class);
 
@@ -195,6 +216,7 @@ public class GameActivity extends Activity {
     }
 
     public void optionBClick(View view){
+        pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
         Intent intent = new Intent(this, GameAnswerActivity.class);
 
@@ -239,6 +261,7 @@ public class GameActivity extends Activity {
     }
 
     public void optionCClick(View view){
+        pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
         Intent intent = new Intent(this, GameAnswerActivity.class);
 
@@ -266,6 +289,7 @@ public class GameActivity extends Activity {
     }
 
     public void optionDClick(View view){
+        pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
         Intent intent = new Intent(this, GameAnswerActivity.class);
 
@@ -347,6 +371,7 @@ public class GameActivity extends Activity {
                 Bundle b = data.getExtras();
                 if (b != null) {
                     newquestion = (boolean) b.getSerializable("returnCheck");
+                    pauseMusic = true;
                 }
             } else if (resultCode == 0) {
                 System.out.println("RESULT CANCELLED");

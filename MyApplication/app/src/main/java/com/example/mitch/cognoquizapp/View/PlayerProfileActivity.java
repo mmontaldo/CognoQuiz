@@ -67,6 +67,10 @@ public class PlayerProfileActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     public void setView(){
         setContentView(R.layout.activity_player_profile);
 

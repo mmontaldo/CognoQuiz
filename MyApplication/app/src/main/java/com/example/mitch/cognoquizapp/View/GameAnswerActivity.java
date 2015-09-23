@@ -27,6 +27,7 @@ public class GameAnswerActivity extends Activity {
     int numberCorrect;
     MediaPlayer playerCorrect;
     MediaPlayer playerIncorrect;
+    boolean activityPausedCheck = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,8 +51,6 @@ public class GameAnswerActivity extends Activity {
             playerCorrect.start();
         } else {
             correctnessTextView.setText("Oops, not quite!");
-            playerIncorrect = MediaPlayer.create(GameAnswerActivity.this,R.raw.wrong);
-            playerIncorrect.start();
         }
 
         if (isFinished){
@@ -62,6 +61,26 @@ public class GameAnswerActivity extends Activity {
 
         answerTextView.setText("The answer is: " + question.getAnswer());
 
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        if (!GameActivity.player.isPlaying()){
+            GameActivity.player.start();
+        }
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        if (activityPausedCheck) {
+            GameActivity.player.stop();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     public void explanationClick(View view){
@@ -79,6 +98,7 @@ public class GameAnswerActivity extends Activity {
     public void nextQuestionClick(View view){
         String buttonText = nextQuestionBtn.getText().toString();
         if (buttonText.equals("Next Question")) {
+            activityPausedCheck = false;
             Intent intent = new Intent();
             intent.putExtra("returnCheck", true);
             setResult(Activity.RESULT_OK, intent);
@@ -86,7 +106,7 @@ public class GameAnswerActivity extends Activity {
         } else {
             Intent intent = new Intent(this, GameResultsActivity.class);
             intent.putExtra("numberCorrect", numberCorrect);
-            GameActivity.player.pause();
+            GameActivity.player.stop();
             startActivity(intent);
         }
     }

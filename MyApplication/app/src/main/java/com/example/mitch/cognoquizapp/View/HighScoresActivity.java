@@ -98,6 +98,10 @@ public class HighScoresActivity extends Activity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     public void mainMenuClick(View view){
         startActivity(new Intent(this, WelcomeScreenActivity.class));
     }

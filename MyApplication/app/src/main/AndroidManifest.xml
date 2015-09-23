@@ -17,7 +17,7 @@
     <application
         android:name=".Controller.App"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/cognosmall"
         android:label="@string/app_name"
         android:debuggable="true"
         android:theme="@style/AppTheme" >
@@ -46,7 +46,8 @@
             android:name=".View.GameActivity"
             android:label="@string/title_activity_game"
             android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen" >
+            android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"
+            android:configChanges="orientation|keyboardHidden|screenSize">
         </activity>
         <activity
             android:name=".View.GameAnswerActivity"

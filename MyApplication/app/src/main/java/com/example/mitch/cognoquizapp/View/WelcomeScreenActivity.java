@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -164,6 +165,10 @@ public class WelcomeScreenActivity extends Activity {
             }
         }, 7*1000, 7*1000);
 
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 
     public void newGameClick(View view){

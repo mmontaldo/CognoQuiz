@@ -166,6 +166,10 @@ public class GameResultsActivity extends Activity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     public void updateUserStats(){
 
         //next question set

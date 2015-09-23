@@ -195,6 +195,10 @@ public class LoginScreenActivity extends Activity {
         }
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     //Signup Button click listener
     public void signUpButtonClick(View v) {
         isLogin = false;
