@@ -114,7 +114,15 @@ public class ChangeAvatarCustomAdapter extends BaseAdapter {
         //Query to get user information
         ParseUser currentUser = ParseUser.getCurrentUser();
 
-        final String avatar = "R.drawable." + result[i].toLowerCase();
+        String avatarTemp = "";
+
+        if (result[i].toLowerCase().equals("gemini twins")){
+            avatarTemp = "R.drawable.gemini";
+        } else {
+            avatarTemp = "R.drawable." + result[i].toLowerCase();
+        }
+
+        final String avatar = avatarTemp;
 
         ParseQuery query = ParseUser.getQuery();
         query.whereEqualTo("objectId", currentUser.getObjectId());

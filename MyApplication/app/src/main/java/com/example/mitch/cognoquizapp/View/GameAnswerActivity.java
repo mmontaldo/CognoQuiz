@@ -66,8 +66,10 @@ public class GameAnswerActivity extends Activity {
     @Override
     protected void onResume(){
         super.onResume();
-        if (!GameActivity.player.isPlaying()){
-            GameActivity.player.start();
+        if (GameActivity.player != null) {
+            if (!GameActivity.player.isPlaying()) {
+                GameActivity.player.start();
+            }
         }
     }
 
@@ -75,7 +77,9 @@ public class GameAnswerActivity extends Activity {
     protected void onPause(){
         super.onPause();
         if (activityPausedCheck) {
-            GameActivity.player.stop();
+            if (GameActivity.player != null) {
+                GameActivity.player.stop();
+            }
         }
     }
 

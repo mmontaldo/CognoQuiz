@@ -128,11 +128,13 @@ public class GameActivity extends Activity {
             setQuestion(QuestionSet.get(currentQuestion - 1));
             newquestion = false;
         }
-        if (resume && !player.isPlaying()){
-            player = MediaPlayer.create(GameActivity.this,R.raw.cogno_game_score);
-            player.setLooping(true);
-            player.start();
+        if (player != null) {
+            if (resume && !player.isPlaying()) {
+                player = MediaPlayer.create(GameActivity.this, R.raw.cogno_game_score);
+                player.setLooping(true);
+                player.start();
 
+            }
         }
     }
 
@@ -140,7 +142,9 @@ public class GameActivity extends Activity {
     protected void onPause(){
         super.onPause();
         if (pauseMusic) {
-            player.stop();
+            if (GameActivity.player != null) {
+                player.stop();
+            }
         }
     }
 
