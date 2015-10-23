@@ -40,6 +40,7 @@ public class Question implements Serializable{
             String optionB,
             String optionC,
             String optionD){
+
         this.question_number = question_number;
         this.question = question;
         this.answer = answer;
@@ -49,8 +50,41 @@ public class Question implements Serializable{
         this.optionB = optionB;
         this.optionC = optionC;
         this.optionD = optionD;
+
     }
 
+    public boolean checkAnswer(int userAnswer){
+        if (isTF){
+            if (answer.equals("True")){
+                if (userAnswer == 0){
+                    return true;
+                }
+            } else {
+                if (userAnswer == 1){
+                    return true;
+                }
+            }
+        } else {
+            if (optionA.equals(answer)){
+                if (userAnswer == 0){
+                    return true;
+                }
+            } else if (optionB.equals(answer)){
+                if (userAnswer == 1){
+                    return true;
+                }
+            } else if (optionC.equals(answer)){
+                if (userAnswer == 2){
+                    return true;
+                }
+            } else if (optionD.equals(answer)){
+                if (userAnswer == 3){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public String getQuestion(){
         return question;
     }

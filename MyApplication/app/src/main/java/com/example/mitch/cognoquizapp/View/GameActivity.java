@@ -52,76 +52,17 @@ public class GameActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //Display loading screen while we make our data call
         setContentView(R.layout.newgame_loading_screen);
 
-        //Query to get user's current question set
-        ParseUser currentUser = ParseUser.getCurrentUser();
-
-        ParseQuery query = ParseUser.getQuery();
-        query.whereEqualTo("objectId", currentUser.getObjectId());
-        query.findInBackground(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> userSet, com.parse.ParseException e) {
-
-                ParseObject v = userSet.get(0);
-                userCurrentSet = v.getInt("current_set");
-
-                //Query to get Question Set
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("Question");
-                query.whereEqualTo("set_number", userCurrentSet);
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    @Override
-                    public void done(List<ParseObject> questionSet, com.parse.ParseException e) {
-                        if (e == null) {
-                            for (ParseObject q : questionSet) {
-                                Question new_q;
-                                int question_number = q.getInt("question_number");
-                                String question = q.getString("question");
-                                String answer = q.getString("answer");
-                                String explanation = q.getString("explanation");
-                                boolean isTF = q.getBoolean("isTF");
-                                String optionA, optionB, optionC, optionD;
-                                if (isTF == false) {
-                                    optionA = q.getString("optionA");
-                                    optionB = q.getString("optionB");
-                                    optionC = q.getString("optionC");
-                                    optionD = q.getString("optionD");
-                                    new_q = new Question(question_number, question, answer, explanation,
-                                            isTF, optionA, optionB, optionC, optionD);
-                                } else {
-                                    new_q = new Question(question_number, question, answer, explanation, isTF);
-                                }
-                                QuestionSet.add(new_q);
-                            }
-
-                            player = MediaPlayer.create(GameActivity.this,R.raw.cogno_game_score);
-                            player.setLooping(true);
-                            player.start();
-
-                            setContentView(R.layout.activity_game);
-                            questionBox = (Button) findViewById(R.id.questionbox);
-                            optionABox = (Button) findViewById(R.id.optionA);
-                            optionBBox = (Button) findViewById(R.id.optionB);
-                            optionCBox = (Button) findViewById(R.id.optionC);
-                            optionDBox = (Button) findViewById(R.id.optionD);
-                            questionNumTxtView = (TextView) findViewById(R.id.questionNum);
-
-                            currentQuestion = 1;
-                            numbercorrect = 0;
-
-                            setQuestion(QuestionSet.get(currentQuestion - 1));
-                            questionNumTxtView.setText("Question " + currentQuestion);
-                            resume = true;
-                        }
-                    }
-                });
-            }
-        });
+        makeDataCallForQuestionSet();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
+        //resume makes sure the question is not incremented before the game starts
+        //newquestion is set to true after the results page is closed
         if (resume && newquestion) {
             currentQuestion++;
             questionNumTxtView.setText("Question " + currentQuestion);
@@ -152,25 +93,6 @@ public class GameActivity extends Activity {
     public void onBackPressed() {
     }
 
-    public void setQuestion(Question q) {
-
-        questionBox.setText(q.getQuestion());
-
-        if (q.getTF()) {
-            optionABox.setText("True");
-            optionBBox.setText("False");
-            optionCBox.setVisibility(View.INVISIBLE);
-            optionDBox.setVisibility(View.INVISIBLE);
-        } else {
-            optionABox.setText(q.getOptionA());
-            optionBBox.setText(q.getOptionB());
-            optionCBox.setVisibility(View.VISIBLE);
-            optionDBox.setVisibility(View.VISIBLE);
-            optionCBox.setText(q.getOptionC());
-            optionDBox.setText(q.getOptionD());
-        }
-    }
-
     public void speechButtonClick(View view){
         displaySpeechRecognizer();
     }
@@ -178,148 +100,94 @@ public class GameActivity extends Activity {
     public void optionAClick(View view){
         pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
-        Intent intent = new Intent(this, GameAnswerActivity.class);
 
-        if (currentQuestion == QuestionSet.size()){
-            intent.putExtra("isFinished", true);
-        } else {
-            intent.putExtra("isFinished", false);
-        }
+        //Check answer, 0 corresponds with selecting A
+        boolean answerCorrectness = q.checkAnswer(0);
 
-        if (q.getTF()){
-            if (q.getAnswer().equals("True")){
-                String message = "correct";
-                numbercorrect++;
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            } else {
-                String message = "incorrect";
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            }
+        if (answerCorrectness){
+            startIntentForCorrectAnswer(q);
         } else {
-            if (q.getAnswer().equals(q.getOptionA())){
-                String message = "correct";
-                numbercorrect++;
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            } else {
-                String message = "incorrect";
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            }
+            startIntentForIncorrectAnswer(q);
         }
     }
 
     public void optionBClick(View view){
         pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
-        Intent intent = new Intent(this, GameAnswerActivity.class);
 
-        //check if its the last question
-        if (currentQuestion == QuestionSet.size()){
-            intent.putExtra("isFinished", true);
-        } else {
-            intent.putExtra("isFinished", false);
-        }
+        //Check answer, 1 corresponds with selecting B
+        boolean answerCorrectness = q.checkAnswer(1);
 
-        if (q.getTF()){
-            if (q.getAnswer().equals("False")){
-                String message = "correct";
-                numbercorrect++;
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            } else {
-                String message = "incorrect";
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            }
+        if (answerCorrectness){
+            startIntentForCorrectAnswer(q);
         } else {
-            if (q.getAnswer().equals(q.getOptionB())){
-                String message = "correct";
-                numbercorrect++;
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            } else {
-                String message = "incorrect";
-                intent.putExtra(CORRECTNESS_MESSAGE, message);
-                intent.putExtra("question", q);
-                intent.putExtra("numberCorrect", numbercorrect);
-                startActivityForResult(intent, 1);
-            }
+            startIntentForIncorrectAnswer(q);
         }
     }
 
     public void optionCClick(View view){
         pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
-        Intent intent = new Intent(this, GameAnswerActivity.class);
 
-        //check if it's the last question
-        if (currentQuestion == QuestionSet.size()){
-            intent.putExtra("isFinished", true);
-        } else {
-            intent.putExtra("isFinished", false);
-        }
+        //Check answer, 2 corresponds with selecting C
+        boolean answerCorrectness = q.checkAnswer(2);
 
-        if (q.getAnswer().equals(q.getOptionC())){
-            String message = "correct";
-            numbercorrect++;
-            intent.putExtra(CORRECTNESS_MESSAGE, message);
-            intent.putExtra("question", q);
-            intent.putExtra("numberCorrect", numbercorrect);
-            startActivityForResult(intent, 1);
+        if (answerCorrectness){
+            startIntentForCorrectAnswer(q);
         } else {
-            String message = "incorrect";
-            intent.putExtra(CORRECTNESS_MESSAGE, message);
-            intent.putExtra("question", q);
-            intent.putExtra("numberCorrect", numbercorrect);
-            startActivityForResult(intent, 1);
+            startIntentForIncorrectAnswer(q);
         }
     }
 
     public void optionDClick(View view){
         pauseMusic = false;
         Question q = QuestionSet.get(currentQuestion-1);
+
+        //Check answer, 3 corresponds with selecting D
+        boolean answerCorrectness = q.checkAnswer(3);
+
+        if (answerCorrectness){
+            startIntentForCorrectAnswer(q);
+        } else {
+            startIntentForIncorrectAnswer(q);
+        }
+    }
+
+    public void startIntentForCorrectAnswer(Question q){
         Intent intent = new Intent(this, GameAnswerActivity.class);
 
-        //check if it's the last question
+        //Check if it is the last question of the set
         if (currentQuestion == QuestionSet.size()){
             intent.putExtra("isFinished", true);
         } else {
             intent.putExtra("isFinished", false);
         }
 
-        if (q.getAnswer().equals(q.getOptionD())){
-            String message = "correct";
-            numbercorrect++;
-            intent.putExtra(CORRECTNESS_MESSAGE, message);
-            intent.putExtra("question", q);
-            intent.putExtra("numberCorrect", numbercorrect);
-            startActivityForResult(intent, 1);
-        } else {
-            String message = "incorrect";
-            intent.putExtra(CORRECTNESS_MESSAGE, message);
-            intent.putExtra("question", q);
-            intent.putExtra("numberCorrect", numbercorrect);
-            startActivityForResult(intent, 1);
-        }
+        String message = "correct";
+        numbercorrect++;
+        intent.putExtra(CORRECTNESS_MESSAGE, message);
+        intent.putExtra("question", q);
+        intent.putExtra("numberCorrect", numbercorrect);
+        startActivityForResult(intent, 1);
     }
 
+    public void startIntentForIncorrectAnswer(Question q){
+
+        Intent intent = new Intent(this, GameAnswerActivity.class);
+
+        //Check if it is the last question of the set
+        if (currentQuestion == QuestionSet.size()){
+            intent.putExtra("isFinished", true);
+        } else {
+            intent.putExtra("isFinished", false);
+        }
+
+        String message = "incorrect";
+        intent.putExtra(CORRECTNESS_MESSAGE, message);
+        intent.putExtra("question", q);
+        intent.putExtra("numberCorrect", numbercorrect);
+        startActivityForResult(intent, 1);
+    }
 
     // Create an intent that can start the Speech Recognizer activity
     private void displaySpeechRecognizer() {
@@ -404,5 +272,101 @@ public class GameActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void makeDataCallForQuestionSet(){
+        //Query to get user's current question set
+        ParseUser currentUser = ParseUser.getCurrentUser();
+
+        ParseQuery query = ParseUser.getQuery();
+        query.whereEqualTo("objectId", currentUser.getObjectId());
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> userSet, com.parse.ParseException e) {
+
+                ParseObject v = userSet.get(0);
+                userCurrentSet = v.getInt("current_set");
+
+                //Query to get Question Set
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("Question");
+                query.whereEqualTo("set_number", userCurrentSet);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    @Override
+                    public void done(List<ParseObject> questionSet, com.parse.ParseException e) {
+                        if (e == null) {
+                            for (ParseObject q : questionSet) {
+                                Question new_q;
+                                int question_number = q.getInt("question_number");
+                                String question = q.getString("question");
+                                String answer = q.getString("answer");
+                                String explanation = q.getString("explanation");
+                                boolean isTF = q.getBoolean("isTF");
+                                String optionA, optionB, optionC, optionD;
+                                if (isTF == false) {
+                                    optionA = q.getString("optionA");
+                                    optionB = q.getString("optionB");
+                                    optionC = q.getString("optionC");
+                                    optionD = q.getString("optionD");
+                                    new_q = new Question(question_number, question, answer, explanation,
+                                            isTF, optionA, optionB, optionC, optionD);
+                                } else {
+                                    new_q = new Question(question_number, question, answer, explanation, isTF);
+                                }
+                                QuestionSet.add(new_q);
+                            }
+
+                            //After Data set is returned, Set up the page
+                            initialize();
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    public void initialize(){
+
+        setContentView(R.layout.activity_game);
+        findViewsByID();
+
+        currentQuestion = 1;
+        numbercorrect = 0;
+
+        setQuestion(QuestionSet.get(currentQuestion - 1));
+        questionNumTxtView.setText("Question " + currentQuestion);
+        resume = true;
+
+        //Music
+        player = MediaPlayer.create(GameActivity.this,R.raw.cogno_game_score);
+        player.setLooping(true);
+        player.start();
+    }
+
+    public void setQuestion(Question q) {
+
+        questionBox.setText(q.getQuestion());
+
+        if (q.getTF()) {
+            optionABox.setText("True");
+            optionBBox.setText("False");
+            optionCBox.setVisibility(View.INVISIBLE);
+            optionDBox.setVisibility(View.INVISIBLE);
+        } else {
+            optionABox.setText(q.getOptionA());
+            optionBBox.setText(q.getOptionB());
+            optionCBox.setVisibility(View.VISIBLE);
+            optionDBox.setVisibility(View.VISIBLE);
+            optionCBox.setText(q.getOptionC());
+            optionDBox.setText(q.getOptionD());
+        }
+    }
+
+    public void findViewsByID(){
+        questionBox = (Button) findViewById(R.id.questionbox);
+        optionABox = (Button) findViewById(R.id.optionA);
+        optionBBox = (Button) findViewById(R.id.optionB);
+        optionCBox = (Button) findViewById(R.id.optionC);
+        optionDBox = (Button) findViewById(R.id.optionD);
+        questionNumTxtView = (TextView) findViewById(R.id.questionNum);
     }
 }

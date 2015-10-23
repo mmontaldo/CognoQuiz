@@ -55,20 +55,87 @@ public class WelcomeScreenActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome_screen);
 
+        findViewsByID();
+        loadAnimations();
+        startRotatingCharacterDisplay();
+    }
+
+    @Override
+    public void onBackPressed() {
+    }
+
+    public void newGameClick(View view){
+        startActivity(new Intent(this, GameActivity.class));
+    }
+
+    public void highScoresClick(View view){
+        startActivity(new Intent(this, HighScoresActivity.class));
+    }
+
+    public void playerProfileClick(View view){
+        startActivity(new Intent(this, PlayerProfileActivity.class));
+    }
+
+    public void logoutClick(View view){
+        new AlertDialog.Builder(this)
+                .setMessage("Are you sure you want to sign out?")
+                .setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        ParseUser.logOut();
+                        Intent intent = new Intent(WelcomeScreenActivity.this, LoginScreenActivity.class);
+                        startActivity(intent);
+                        WelcomeScreenActivity.this.finish();
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .show();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_welcome_screen, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void findViewsByID(){
         characterImageView = (ImageView) findViewById(R.id.character_image);
         characterNameTxtView = (TextView) findViewById(R.id.character_name);
         characterDescTxtView = (TextView) findViewById(R.id.character_desc);
-     //   characterImageView.setImageResource(R.drawable.volo2);
+    }
 
+    public void loadAnimations(){
         //initialize animations
         animAlphaAppear = AnimationUtils.loadAnimation(this,
                 R.anim.anim_alpha_appear);
 
         animAlphaDisappear = AnimationUtils.loadAnimation(this,
                 R.anim.anim_alpha_disappear);
+    }
 
+    public void startRotatingCharacterDisplay(){
+
+        //Choose random character to display first
         Random rand = new Random();
-
         index = rand.nextInt(11);
 
         //set initial character
@@ -164,63 +231,5 @@ public class WelcomeScreenActivity extends Activity {
 
             }
         }, 7*1000, 7*1000);
-
-    }
-
-    @Override
-    public void onBackPressed() {
-    }
-
-    public void newGameClick(View view){
-        startActivity(new Intent(this, GameActivity.class));
-    }
-
-    public void highScoresClick(View view){
-        startActivity(new Intent(this, HighScoresActivity.class));
-    }
-
-    public void playerProfileClick(View view){
-        startActivity(new Intent(this, PlayerProfileActivity.class));
-    }
-
-    public void logoutClick(View view){
-        new AlertDialog.Builder(this)
-                .setMessage("Are you sure you want to sign out?")
-                .setPositiveButton("Sign out", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        ParseUser.logOut();
-                        Intent intent = new Intent(WelcomeScreenActivity.this, LoginScreenActivity.class);
-                        startActivity(intent);
-                        WelcomeScreenActivity.this.finish();
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .show();
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_welcome_screen, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 }
