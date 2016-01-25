@@ -1,31 +1,43 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 21
-    buildToolsVersion "21.1.2"
-
+    signingConfigs {
+        config {
+            keyAlias 'Android'
+            keyPassword 'buddym'
+            storeFile file('/Users/Mitch/CognoQuiz/MyApplication/app/keystore/android.jks.docx')
+            storePassword 'buddym'
+        }
+    }
+    compileSdkVersion 23
+    buildToolsVersion "22.0.1"
     defaultConfig {
-        applicationId "com.example.mitch.cognoquizapp"
+        applicationId "com.example2.mitch.cognoquizapp"
         minSdkVersion 17
         targetSdkVersion 21
-        versionCode 1
+        versionCode 6
         versionName "1.0"
     }
     buildTypes {
-	debug {
-	    debuggable true
-	}
+        debug {
+            debuggable true
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
+            zipAlignEnabled true
         }
     }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.parse.bolts:bolts-android:1.+'
     compile fileTree(dir: 'libs', include: 'Parse-*.jar')
-    compile 'com.google.android.gms:play-services:6.5.87'
-    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.parse.bolts:bolts-android:1.+'
+    compile 'com.google.android.gms:play-services:8.4.0'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.google.android.gms:play-services-ads:8.4.0'
+    compile 'com.google.android.gms:play-services-identity:8.4.0'
+    compile 'com.google.android.gms:play-services-gcm:8.4.0'
 }

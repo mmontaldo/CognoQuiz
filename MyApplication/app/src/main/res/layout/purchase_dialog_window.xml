@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/purchase_background">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Cogno Store"
+        android:id="@+id/purchaseTitle"
+        android:textSize="25dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Welcome to the Cogno Store! Download hundreds more questions now!"
+        android:id="@+id/heading"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:textSize="17dp" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Loading..."
+        android:id="@+id/loading"
+        android:layout_gravity="center_horizontal"
+        android:visibility="invisible" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:id="@+id/pack1Layout"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="0dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Bonus Pack 1:   90 Questions"
+            android:id="@+id/pack1Text"
+            android:textSize="17dp"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="BUY $.99"
+            android:textColor="@color/white"
+            android:background="@drawable/purchase_button"
+            android:id="@+id/pack1button"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center_horizontal"
+        android:id="@+id/pack2Layout"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Bonus Pack 2:   90 Questions"
+            android:id="@+id/pack2Text"
+            android:textSize="17dp"
+            android:layout_marginRight="20dp" />
+
+        <Button
+            android:layout_width="120dp"
+            android:layout_height="35dp"
+            android:text="BUY $.99"
+            android:textColor="@color/white"
+            android:background="@drawable/purchase_button"
+            android:id="@+id/pack2button"
+            android:textSize="20dp" />
+
+    </LinearLayout>
+
+</LinearLayout>

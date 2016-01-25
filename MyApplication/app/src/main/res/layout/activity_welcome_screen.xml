@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@drawable/spacebkg"
-    tools:context="com.example.mitch.cognoquizapp.View.WelcomeScreenActivity">
+    tools:context="com.example2.mitch.cognoquizapp.View.WelcomeScreenActivity">
 
 
 
@@ -15,15 +15,56 @@
         android:id="@+id/imageButton"
         android:layout_alignParentBottom="true"
         android:background="@drawable/buttonshape_signout"
-        android:src="@drawable/th_settings_icon"
-        android:onClick="logoutClick"/>
+        android:src="@drawable/settings"
+        android:padding="4dp"
+        android:scaleType="fitCenter"
+        android:onClick="logoutClick"
+        android:clickable="true" />
+
+    <ImageButton
+        android:layout_width="42dp"
+        android:layout_height="39dp"
+        android:id="@+id/infoButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/imageButton"
+        android:background="@drawable/buttonshape_signout"
+        android:src="@drawable/info_image"
+        android:scaleType="fitCenter"
+        android:onClick="infoClick"
+        android:clickable="true" />
+
+    <ImageButton
+        android:layout_width="42dp"
+        android:layout_height="39dp"
+        android:id="@+id/purchaseMenuButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/infoButton"
+        android:background="@drawable/buttonshape_signout"
+        android:src="@drawable/purchase_image"
+        android:scaleType="fitCenter"
+        android:onClick="purchaseMenuClick"
+        android:clickable="true"
+        android:padding="6dp"
+        android:visibility="gone" />
+
+    <Button
+        android:layout_width="80dp"
+        android:layout_height="39dp"
+        android:id="@+id/purchaseButton"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/purchaseMenuButton"
+        android:background="@drawable/buttonshape_signout"
+        android:text="Store"
+        android:onClick="purchaseMenuClick"
+        android:clickable="true"
+        android:textColor="#ffffff"
+        android:textSize="25dp" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:weightSum="10"
-        >
+        android:weightSum="10">
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
@@ -96,7 +137,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="Cogno"
                 android:id="@+id/character_name"
-                android:textColor="#B4ffffff"
+                android:textColor="#efffffff"
                 android:textSize="25dp"
                 android:gravity="center"
                 android:layout_marginTop="0dp"
@@ -108,7 +149,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Cogno combines telepathy and brains\nto be the most intelligent being in the\nknown universe."
                 android:id="@+id/character_desc"
-                android:textColor="#B4ffffff"
+                android:textColor="#eaffffff"
                 android:textSize="14dp"
                 android:gravity="center"
                 android:layout_weight="3"/>

@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@drawable/spacebkg"
-    tools:context="com.example.mitch.cognoquizapp.View.LoginScreenActivity">
+    tools:context="com.example2.mitch.cognoquizapp.View.LoginScreenActivity">
 
 
     <LinearLayout
@@ -181,7 +181,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Cogno&apos;s Quiz"
+                android:text=""
                 android:id="@+id/cognoquiz"
                 android:textSize="25dp"
                 android:gravity="center"
@@ -196,7 +196,7 @@
                 android:layout_alignLeft="@+id/cognoquiz"
                 android:layout_below="@+id/cognoquiz"
                 android:background="@android:color/transparent"
-                android:src="@drawable/cogno"
+                android:src="@drawable/cogno_logo"
                 android:layout_weight="3" />
 
 

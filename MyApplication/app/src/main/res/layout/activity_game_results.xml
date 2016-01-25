@@ -5,7 +5,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:background="@drawable/spacebkg"
-    tools:context="com.example.mitch.cognoquizapp.View.GameResultsActivity"
+    tools:context="com.example2.mitch.cognoquizapp.View.GameResultsActivity"
     android:nestedScrollingEnabled="true">
 
 
@@ -115,7 +115,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="40 xp to scientist"
+        android:text="40 xp to next level: scientist"
         android:fontFamily="sans-serif-light"
         android:id="@+id/userxpleft"
         android:textColor="#FFFFFF"
@@ -128,15 +128,15 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="New Game"
-        android:id="@+id/restartgame"
+        android:text="Next Round"
+        android:id="@+id/nextround"
         android:layout_alignParentEnd="true"
         android:textSize="20dp"
         android:layout_centerVertical="true"
         android:background="@drawable/buttonshapenext"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:onClick="restartGameClick"
+        android:onClick="nextRoundClick"
         android:layout_alignBottom="@+id/xpgained"/>
 
     <Button
@@ -146,7 +146,7 @@
         android:id="@+id/mainmenu"
         android:layout_alignParentEnd="true"
         android:textSize="20dp"
-        android:layout_below="@+id/restartgame"
+        android:layout_below="@+id/nextround"
         android:background="@drawable/buttonshapenext"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
