@@ -223,7 +223,7 @@ public class GameResultsActivity extends Activity {
         if (mIsBonus1 == false && mIsBonus2 == false){
             if (questionSet > 3){
                 alert("You have completed all of the free rounds of Cogno's Quiz! " +
-                        "Go to the Cogno Store ($) in the main menu to purchase more questions, or try the free rounds again!");
+                        "Go to the Store in the main menu to purchase more questions, or try the free rounds again!");
                 questionSet = 1;
                 set1complete = true;
             } else {
@@ -238,7 +238,7 @@ public class GameResultsActivity extends Activity {
 
             if (questionSet > 12){
                 alert("You have completed all of your purchased rounds of Cogno's Quiz! " +
-                        "Go to the Cogno Store ($) in the main menu to purchase more questions, or try your rounds again!");
+                        "Go to the Store in the main menu to purchase more questions, or try your rounds again!");
                 questionSet = 1;
                 set2complete = true;
             } else {

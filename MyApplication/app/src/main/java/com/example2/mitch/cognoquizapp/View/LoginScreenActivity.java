@@ -2,7 +2,11 @@ package com.example2.mitch.cognoquizapp.View;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +15,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example2.mitch.cognoquizapp.R;
@@ -203,17 +208,22 @@ public class LoginScreenActivity extends Activity {
     }
 
     public void logInButton2Click(View v){
-        setContentView(R.layout.login_loading_screen);
         String username = userEdTxt.getText().toString();
         String password = passEdTxt.getText().toString();
 
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             public void done(ParseUser user, com.parse.ParseException e) {
                 if (user != null) {
+                    setContentView(R.layout.login_loading_screen);
                     startActivity(new Intent(LoginScreenActivity.this,WelcomeScreenActivity.class ));
                     // Hooray! The user is logged in.
                 } else {
                     // Signup failed. Look at the ParseException to see what happened.
+
+                    Toast.makeText(getApplicationContext(), "Your username or password is incorrect. Please try again.",
+                            Toast.LENGTH_LONG).show();
+                    Log.v("SIGN UP", e.getMessage());
+                    Log.v("SIGN UP", "REACHED ERROR");
                 }
             }
         });
@@ -251,6 +261,16 @@ public class LoginScreenActivity extends Activity {
         emailEdTxt = (EditText) findViewById(R.id.etEmail);
         userEdTxt = (EditText) findViewById(R.id.etUserName);
         passEdTxt = (EditText) findViewById(R.id.etPass);
+
+        String s = "Existing User\nLog In";
+        SpannableString ss1=  new SpannableString(s);
+        ss1.setSpan(new RelativeSizeSpan(0.5f), 0, 13, 0); // set size
+        loginBtn.setText(ss1);
+
+        String s1 = "New User\nSign Up";
+        SpannableString ss2=  new SpannableString(s1);
+        ss2.setSpan(new RelativeSizeSpan(0.5f), 0, 8, 0); // set size
+        signupBtn.setText(ss2);
     }
 
     public void loginButtonClickAnimations(){

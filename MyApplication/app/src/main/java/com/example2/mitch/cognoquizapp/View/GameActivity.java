@@ -183,7 +183,7 @@ public class GameActivity extends Activity {
         //newquestion is set to true after the results page is closed
         if (resume && newquestion) {
             currentQuestion++;
-            questionNumTxtView.setText("Question " + currentQuestion);
+            questionNumTxtView.setText("Question " + currentQuestion + " of 10");
             setQuestion(QuestionSet.get(currentQuestion - 1));
             newquestion = false;
         }
@@ -480,7 +480,7 @@ public class GameActivity extends Activity {
         numbercorrect = 0;
 
         setQuestion(QuestionSet.get(currentQuestion - 1));
-        questionNumTxtView.setText("Question " + currentQuestion);
+        questionNumTxtView.setText("Question " + currentQuestion + " of 10");
         resume = true;
 
         //Music

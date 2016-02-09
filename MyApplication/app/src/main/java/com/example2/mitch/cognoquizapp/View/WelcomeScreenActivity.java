@@ -460,7 +460,7 @@ public class WelcomeScreenActivity extends Activity {
             pack1Button.setText("Owned");
             pack1Button.setEnabled(false);
 
-            Drawable d = ContextCompat.getDrawable(WelcomeScreenActivity.this, R.drawable.purchase_background);
+            Drawable d = ContextCompat.getDrawable(WelcomeScreenActivity.this, R.drawable.purchase_button);
             pack2Button.setBackground(d);
             pack2Button.setEnabled(true);
 
